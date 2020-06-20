@@ -1,0 +1,37 @@
+html {
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    padding: 0px !important;
+    margin: 0px !important;
+    height: 100vh;
+    width: 100vw;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+pre {
+    user-select: default;
+    cursor: text;
+    -webkit-user-select: text;
+}
+
+a:not([draggable=true]), img:not([draggable=true]) {
+    -webkit-user-drag: none;
+    user-drag: none; /* Technically not supported in Electron yet */
+}
+a[href^="http://"],
+a[href^="https://"],
+a[href^="ftp://"] {
+    -webkit-user-drag: auto;
+    user-drag: auto; /* Technically not supported in Electron yet */
+}

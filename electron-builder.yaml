@@ -1,0 +1,18 @@
+appId: hu.coolhdskylive
+# publish:
+#   provider: github
+#   token: 
+#   repo:
+#   owner:
+win:
+  # publish:
+  #   - github
+  target: NSIS
+linux:
+  # publish:
+  #   - github
+  target: AppImage
+files:
+  - build/**/*
+  - node_modules/**/*
+    
