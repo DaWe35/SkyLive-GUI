@@ -23,7 +23,7 @@ export default function Restream({ handleError}) {
         } else {
             setErrors(false);
         }
-        Streams.createRetream(streamToken).catch(handleError);
+        Streams.createRestream(streamToken).catch(handleError);
     }
 
     return <Container maxWidth='lg' style={{ height: '100%', display: 'flex', flexDirection: 'column', paddingTop: 20 }}>

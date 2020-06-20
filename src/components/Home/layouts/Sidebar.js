@@ -102,7 +102,7 @@ function Sidebar({ history, handleCloseStream }) {
     const handleClickClose = (event, token) => {
         event.stopPropagation();
         // //console.log(token);
-        // handleCloseStream(token);
+        handleCloseStream(token);
     }
 
     useEffect(() => {
