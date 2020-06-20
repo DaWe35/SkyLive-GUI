@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -50,11 +50,9 @@ app.on('activate', function () {
     }
 });
 
-
-// ipcMain.on("JWT_SET", (event,value)=>{
-//     store.set("JWT", value);
-//     log.info("JWT set to " + value);
-// });
+ipcMain.on(channels.OPEN_BROWSER, ({url})=>{
+    shell.openExternal(url);
+});
 
 // ipcMain.on("JWT_DELETE", (event)=>{
 //     store.delete("JWT");
