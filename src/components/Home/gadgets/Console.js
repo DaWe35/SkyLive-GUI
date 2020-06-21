@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function Console({ label, tooltip, text, style }) {
+export default function Console({ label, tooltip, text, style, noTitle, hidden }) {
     const consoleRef = useRef(null)
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -23,15 +23,15 @@ export default function Console({ label, tooltip, text, style }) {
     }//ref.current.offsetTop)
         , [text])
     return <>
-        <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
+        {!noTitle && <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
             {label}
             <Tooltip title={tooltip} style={{ marginLeft: 20 }}>
                 <IconButton aria-label="delete" size="small">
                     <InfoOutlined fontSize="inherit" />
                 </IconButton>
             </Tooltip>
-        </Typography>
-        <div style={{ ...style, display: 'flex', flexDirection: 'column', justifyContent: 'space-around', minHeight: 0, overflow: 'hidden' }}>
+        </Typography>}
+        <div style={{ ...style, display: hidden==undefined?'flex':(hidden?'none':'flex'), flexDirection: 'column', justifyContent: 'space-around', minHeight: 0, overflow: 'hidden' }}>
             <pre className={classes.greenHighlight} style={{ backgroundColor: 'black', overflow: 'scroll', height: "100%", minHeight: 0, padding: 10, margin: 0 }}>{text}
                 <div ref={consoleRef} />
             </pre>

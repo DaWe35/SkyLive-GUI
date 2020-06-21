@@ -94,20 +94,35 @@ const StreamsProvider = props => {
     }
 
     useEffect(() => {
-        const vegeta = (event, { token, output }) => {
+        const listener = (event, { token, output, processKey }) => {
             //console.log("token:" + token);
             //console.log(allStreams);
             if (!allStreams[token]) {
-                //console.log("shame");
+                console.log("shame");
                 return;
             }
-            let newOutput = allStreams[token].output ? [...allStreams[token].output, output] : [output];
-            let newAllStreams = { ...allStreams };
+
+            let newOutput;
+            let newAllStreams;
+            if (!processKey) {
+                newOutput = allStreams[token].output ? [...allStreams[token].output, output] : [output];
+            } else {
+                newOutput = {};
+                if (!allStreams[token].output) {
+                    newOutput.__MULTI__ = true;
+                    newOutput[processKey] = [output];
+                } else {
+                    newOutput = {...(allStreams[token].output)};
+                    newOutput[processKey] = allStreams[token].output[processKey]? [...(allStreams[token].output[processKey]), output] : [output];
+                }                                
+            }
+            
+            newAllStreams = { ...allStreams };
             newAllStreams[token].output = newOutput;
             setAllStreams(newAllStreams);
         }
-        ipcRenderer.on(channels.STREAM_STD_OUT, vegeta);
-        return () => ipcRenderer.removeListener(channels.STREAM_STD_OUT, vegeta);
+        ipcRenderer.on(channels.STREAM_STD_OUT, listener);
+        return () => ipcRenderer.removeListener(channels.STREAM_STD_OUT, listener);
     }, [allStreams])
 
 

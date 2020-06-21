@@ -20,72 +20,85 @@ const platformBinaries = {
         win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe')
 
     },
+    // In order to open multiple binaries, define an object with keys corresponding to names (arrays work too, provided ordering is maintained. However objects with semantic keys are recommended)
+    // Note: these names are used in signalling as well as in fetching arguments
+    // Not specifying correct keys will have unexpected results
+    // [NOTE: DO NOT USE '__MULTI__' as key]
     restream: {
-        linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
-        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe')
+        linux: { processOne: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'), processTwo: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript') },
+        win32: { processOne: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'), processTwo: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe') }
     }
 }
 
 function setUpStreams(mainWindow) {
 
-    function attachIO(stream, token) {
+    function attachIO(stream, token, key) {
+        console.log("START SETUP IO")
         stream.stdout.on('data', (data) => {
-            mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: String(data).trim() });
+            console.log("Key:" + key + " data:" + data + " TOKEN: " + token);
+            mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: String(data).trim(), processKey: (key ? key : false) });
             // console.log(`stdout: ${String(data).trim()}`);
         });
 
         stream.stderr.on('data', (data) => {
-            mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: String(data).trim() });
+            mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: String(data).trim(), processKey: (key ? key : false) });
             // console.error(`stderr: ${data} sup\n sup`);
         });
 
         stream.on('close', (code) => {
-            mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: "EXITING WITH CODE: " + String(code).trim() });
+            mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: "EXITING WITH CODE: " + String(code).trim(), processKey: (key ? key : false) });
             // console.log(`child process exited with code ${code}`);
         });
+        console.log("END SETUP IO")
+
+    }
+
+    function createStreams(bins, args, token) {
+        if (Object.keys(bins).length == 0 || typeof bins === 'string') {
+            streams[token] = spawn(bins, args);
+            attachIO(streams[token], token);
+        } else {
+            streams[token] = {__MULTI__: true};
+            Object.keys(bins).forEach(key => {
+                if (!args[key]) throw new Error("Appropriate keys not found in commands.js");
+
+                streams[token][key] = spawn(bins[key], args[key]);
+                attachIO(streams[token][key], token, key);
+            })
+        }
     }
 
     ipcMain.on(channels.CREATE_RTMP_STREAM, (event, { token }) => {
-        // //console.log(command);
-        // //console.log("TOKEN: ", token)
-        console.log(process.resourcesPath);
-
-        streams[token] = spawn(platformBinaries.rtmp[process.platform], commands.getRtmpStreamArguments(token));
-        attachIO(streams[token], token);
+        createStreams(platformBinaries.rtmp[process.platform], commands.getRtmpStreamArguments(token), token);
     });
 
     ipcMain.on(channels.CREATE_HLS_STREAM, (event, { token, dir }) => {
-        // //console.log(command);
-        // //console.log("TOKEN: ", token)
-
-        streams[token] = spawn(platformBinaries.hls[process.platform], commands.getHlsStreamArguments(token, dir));
-        attachIO(streams[token], token);
-
+        createStreams(platformBinaries.hls[process.platform], commands.getHlsStreamArguments(token, dir), token);
     });
 
     ipcMain.on(channels.CREATE_RESTREAM, (event, { token, url }) => {
-        // //console.log(command);
-        // //console.log("TOKEN: ", token)
-        
-        streams[token] = spawn(platformBinaries.restream[process.platform], commands.getRestreamArguments(token, url));
-        attachIO(streams[token], token);
-
+        createStreams(platformBinaries.restream[process.platform], commands.getRestreamArguments(token, url), token);
     });
 
     ipcMain.on(channels.APP_INFO, (event) => {
-        // mainWindow.webContents.send('update_error',{whoa:"damnm"});
         event.sender.send(channels.APP_INFO, app.getVersion());
     });
 
     ipcMain.on(channels.CLOSE_STREAM, (event, { token }) => {
-        kill(streams[token].pid);
+        if (streams[token].__MULTI__) {
+            Object.keys(streams[token]).forEach(key=>{
+                if (key === '__MULTI__') return;
+                kill(streams[token][key].pid);
+            })
+        } else {
+            kill(streams[token].pid);
+        }
         delete streams[token];
     });
 
     ipcMain.on(channels.STREAM_DATA, (event, { token }) => {
         axios.get('https://skylive.coolhd.hu/api/stream_data', { params: { token } })
             .then(res => {
-                // //console.log(res);
                 event.sender.send(channels.STREAM_DATA, { err: false, res: { token, data: res.data } });
             })
             .catch(err => event.sender.send(channels.STREAM_DATA, { err: err }))

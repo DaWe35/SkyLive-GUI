@@ -36,7 +36,7 @@ export default function Restream({ handleError }) {
         }
 
         setErrors(false);
-        Streams.createHlsStream(streamToken, streamURL).catch(handleError);
+        Streams.createRestream(streamToken, streamURL).catch(handleError);
     }
 
     return <Container maxWidth='lg' style={{ height: '100%', display: 'flex', flexDirection: 'column', paddingTop: 20 }}>
