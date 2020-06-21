@@ -48,7 +48,8 @@ export default function CreatedStream({ match, handleCloseStream }) {
                         //Object.keys
                         <AppBar position="static">
                             <Tabs value={tabNumber} onChange={handleTabChange}>
-                                {Object.keys(output).filter(key => key !== '__MULTI__').map( (ouputChannel, index) =>
+
+                                {Object.keys(output).filter(key => key !== '__MULTI__').map((ouputChannel, index) =>
                                     <Tab label={Object.keys(output).filter(key => key !== '__MULTI__')[index]} />
                                 )}
                             </Tabs>

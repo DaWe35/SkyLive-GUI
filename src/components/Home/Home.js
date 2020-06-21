@@ -49,7 +49,7 @@ export default function Home() {
         <Router>
             <Sidebar handleCloseStream={(token) => closeStreamAttempted(token)} />
             <div className={classes.root}>
-                <Paper style={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Paper style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
                     <IconButton>
                         <InfoOutlined />
                     </IconButton>
