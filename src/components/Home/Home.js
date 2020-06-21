@@ -10,6 +10,7 @@ import CreatedStream from './layouts/CreatedStream';
 
 import CloseStreamDialog from './layouts/CloseStreamDialog';
 import CreateStreamErrorDialog from './layouts/CreateStreamErrorDialog';
+import InfoDialog from './layouts/InfoDialog';
 
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -37,6 +38,7 @@ export default function Home() {
 
     const [closeStreamDialogToken, setCloseStreamDialogToken] = useState(false);
     const [createStreamErrorDialog, setCreateStreamErrorDialog] = useState(false);
+    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
 
 
     const closeStreamAttempted = (token) => { setCloseStreamDialogToken(token) }
@@ -45,12 +47,13 @@ export default function Home() {
     return <StreamsProvider>
         <CssBaseline />
         <CloseStreamDialog token={closeStreamDialogToken} handleDialogClosed={() => setCloseStreamDialogToken(null)} />
+        <InfoDialog open={infoDialogOpen} handleClose={()=>setInfoDialogOpen(false)}/>
         <CreateStreamErrorDialog data={createStreamErrorDialog} handleDialogClosed={() => setCreateStreamErrorDialog(false)} />
         <Router>
             <Sidebar handleCloseStream={(token) => closeStreamAttempted(token)} />
             <div className={classes.root}>
                 <Paper style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-                    <IconButton>
+                    <IconButton onClick={()=>setInfoDialogOpen(true)}>
                         <InfoOutlined />
                     </IconButton>
                     <IconButton>
