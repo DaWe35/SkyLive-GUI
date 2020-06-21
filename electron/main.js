@@ -50,8 +50,9 @@ app.on('activate', function () {
     }
 });
 
-ipcMain.on(channels.OPEN_BROWSER, ({url})=>{
+ipcMain.on(channels.OPEN_BROWSER, ({ url }) => {
     shell.openExternal(url);
+
 });
 
 // ipcMain.on("JWT_DELETE", (event)=>{

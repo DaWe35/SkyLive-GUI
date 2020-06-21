@@ -5,14 +5,18 @@ appId: hu.coolhdskylive
 #   repo:
 #   owner:
 win:
+  extraResources:    
+    - bin/windows/**/*
   # publish:
   #   - github
   target: NSIS
+
 linux:
+  extraResources:
+    - bin/linux/**/*
   # publish:
   #   - github
   target: AppImage
 files:
   - build/**/*
   - node_modules/**/*
-    

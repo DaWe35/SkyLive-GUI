@@ -2,15 +2,28 @@ const { ipcMain, app } = require("electron");
 const axios = require('axios');
 const { spawn } = require('cross-spawn');
 const kill = require('tree-kill')
+const path = require('path');
+
+let isProd = process.env.ELECTRON_START_URL ? false : true;
 
 const { channels } = require('./../src/shared/constants.js');
 const commands = require('../commands.js');
-
 let streams = {};
 
 const platformBinaries = {
-    'win32': 'bin/windows/sampleScript.exe',
-    'linux': 'bin/linux/sampleScript'
+    rtmp: {
+        linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
+        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe')
+    },
+    hls: {
+        linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
+        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe')
+
+    },
+    restream: {
+        linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
+        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe')
+    }
 }
 
 function setUpStreams(mainWindow) {
@@ -35,9 +48,9 @@ function setUpStreams(mainWindow) {
     ipcMain.on(channels.CREATE_RTMP_STREAM, (event, { token }) => {
         // //console.log(command);
         // //console.log("TOKEN: ", token)
-        console.log(process.cwd());
+        console.log(process.resourcesPath);
 
-        streams[token] = spawn(platformBinaries[process.platform], commands.getRtmpStreamArguments(token));
+        streams[token] = spawn(platformBinaries.rtmp[process.platform], commands.getRtmpStreamArguments(token));
         attachIO(streams[token], token);
     });
 
@@ -45,7 +58,7 @@ function setUpStreams(mainWindow) {
         // //console.log(command);
         // //console.log("TOKEN: ", token)
 
-        streams[token] = spawn(platformBinaries[process.platform], commands.getHlsStreamArguments(token, dir));
+        streams[token] = spawn(platformBinaries.hls[process.platform], commands.getHlsStreamArguments(token, dir));
         attachIO(streams[token], token);
 
     });
@@ -53,8 +66,8 @@ function setUpStreams(mainWindow) {
     ipcMain.on(channels.CREATE_RESTREAM, (event, { token, url }) => {
         // //console.log(command);
         // //console.log("TOKEN: ", token)
-
-        streams[token] = spawn(platformBinaries[process.platform], commands.getRestreamArguments(token, url));
+        
+        streams[token] = spawn(platformBinaries.restream[process.platform], commands.getRestreamArguments(token, url));
         attachIO(streams[token], token);
 
     });
