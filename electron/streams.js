@@ -2,35 +2,42 @@ const { ipcMain, app } = require("electron");
 const axios = require('axios');
 const { spawn } = require('cross-spawn');
 const kill = require('tree-kill')
+
 const { channels } = require('./../src/shared/constants.js');
+const commands = require('../commands.js');
 
 let streams = {};
 
+const platformBinaries = {
+    'win32': 'bin/windows/sampleScript.exe',
+    'linux': 'bin/linux/sampleScript'
+}
+
 function setUpStreams(mainWindow) {
-    
+
     function attachIO(stream, token) {
         stream.stdout.on('data', (data) => {
             mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: String(data).trim() });
             // console.log(`stdout: ${String(data).trim()}`);
         });
-    
+
         stream.stderr.on('data', (data) => {
             mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: String(data).trim() });
             // console.error(`stderr: ${data} sup\n sup`);
         });
-    
+
         stream.on('close', (code) => {
             mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: "EXITING WITH CODE: " + String(code).trim() });
             // console.log(`child process exited with code ${code}`);
         });
     }
 
-    ipcMain.on(channels.CREATE_RTMP_STREAM, (event, { token, command }) => {
+    ipcMain.on(channels.CREATE_RTMP_STREAM, (event, { token }) => {
         // //console.log(command);
         // //console.log("TOKEN: ", token)
         console.log(process.cwd());
 
-        streams[token] = spawn('./bin/linux/sampleScript',['-t', token]);
+        streams[token] = spawn(platformBinaries[process.platform], commands.getRtmpStreamArguments(token));
         attachIO(streams[token], token);
     });
 
@@ -38,7 +45,7 @@ function setUpStreams(mainWindow) {
         // //console.log(command);
         // //console.log("TOKEN: ", token)
 
-        streams[token] = spawn('./bin/linux/sampleScript', ['-t', token, '-d', dir]);
+        streams[token] = spawn(platformBinaries[process.platform], commands.getHlsStreamArguments(token, dir));
         attachIO(streams[token], token);
 
     });
@@ -47,7 +54,7 @@ function setUpStreams(mainWindow) {
         // //console.log(command);
         // //console.log("TOKEN: ", token)
 
-        streams[token] = spawn('./bin/linux/sampleScript', ['-t', token, '-u', url]);
+        streams[token] = spawn(platformBinaries[process.platform], commands.getRestreamArguments(token, url));
         attachIO(streams[token], token);
 
     });

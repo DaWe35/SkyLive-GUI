@@ -9,6 +9,8 @@
 # production
 /build
 /dist
+/bin/src/build
+/bin/src/__pycache__
 
 # misc
 .DS_Store
