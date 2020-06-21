@@ -4,8 +4,8 @@ import clsx from 'clsx';
 
 import { withRouter } from 'react-router';
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Drawer, Toolbar, ListSubheader, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, Button, DialogActions, ListItemSecondaryAction, Tooltip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Drawer, Toolbar, ListSubheader, IconButton, ListItemSecondaryAction, Tooltip } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 
@@ -94,7 +94,6 @@ const homeTabs = [
 function Sidebar({ history, handleCloseStream }) {
     const Streams = useStreams();
     const classes = useStyles();
-    const theme = useTheme();
 
     const [openStreamTabs, setOpenStreamTabs] = useState([]);
 
@@ -136,7 +135,7 @@ function Sidebar({ history, handleCloseStream }) {
                     }
                 >
                     {homeTabs.map((tab, index) => (
-                        <ListItem button onClick={() => history.push(tab.to)} selected={window.location.href.split('#')[1] == tab.to ? true : false}>
+                        <ListItem button onClick={() => history.push(tab.to)} selected={window.location.href.split('#')[1] === tab.to ? true : false}>
                             <ListItemIcon><tab.icon style={{ color: 'white' }} /></ListItemIcon>
                             <ListItemText primary={tab.title} />
                         </ListItem>
@@ -151,7 +150,7 @@ function Sidebar({ history, handleCloseStream }) {
                     }
                 >
                     {openStreamTabs.map((tab, index) => (
-                        <ListItem button onClick={() => history.push('/stream/' + tab.token)} selected={window.location.href.split('#')[1] == tab.to ? true : false}>
+                        <ListItem button onClick={() => history.push('/stream/' + tab.token)} selected={window.location.href.split('#')[1] === tab.to ? true : false}>
                             <ListItemIcon><tab.icon style={{ color: 'white' }} /></ListItemIcon>
                             <Tooltip title={tab.title}>
                                 <ListItemText primary={tab.title} primaryTypographyProps={{ style: { whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflowX: 'hidden' } }} />

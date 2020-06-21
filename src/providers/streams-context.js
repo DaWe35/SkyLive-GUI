@@ -15,7 +15,7 @@ function fetchStreamData(token) {
                 reject(err);
                 return;
             }
-            if (res.token == token) {
+            if (res.token === token) {
                 ipcRenderer.removeAllListeners(channels.STREAM_DATA);
             }
             resolve(res);

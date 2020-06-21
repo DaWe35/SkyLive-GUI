@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography, Container, AppBar, Tabs, Tab } from '@material-ui/core';
-import { AirplayOutlined, PlaylistPlayOutlined, FolderOutlined, StopScreenShareOutlined, OpenInBrowserOutlined } from '@material-ui/icons';
+import { PlaylistPlayOutlined, StopScreenShareOutlined, OpenInBrowserOutlined } from '@material-ui/icons';
 
 import Console from '../gadgets/Console.js';
 import { useStreams } from '../../../providers/streams-context.js';

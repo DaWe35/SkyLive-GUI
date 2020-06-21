@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Typography, Container, Avatar, TextField, Tooltip, IconButton } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { AirplayOutlined, SlowMotionVideoOutlined, InfoOutlined } from '@material-ui/icons';
-import { deepPurple, purple, blueGrey, red, grey } from '@material-ui/core/colors';
+import { Button, Typography, Container} from '@material-ui/core';
+import { AirplayOutlined, SlowMotionVideoOutlined } from '@material-ui/icons';
 import FlavouredInput from '../gadgets/FlavouredInput';
 import { useStreams } from '../../../providers/streams-context';
 import Loader from '../gadgets/Loader';

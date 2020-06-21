@@ -54,7 +54,7 @@ function setUpStreams(mainWindow) {
     }
 
     function createStreams(bins, args, token) {
-        if (Object.keys(bins).length == 0 || typeof bins === 'string') {
+        if (Object.keys(bins).length === 0 || typeof bins === 'string') {
             streams[token] = spawn(bins, args);
             attachIO(streams[token], token);
         } else {

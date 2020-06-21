@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import 'typeface-roboto';
 import Sidebar from './layouts/Sidebar';
 import StreamRTMP from './layouts/StreamRTMP';
@@ -13,12 +13,12 @@ import CreateStreamErrorDialog from './layouts/CreateStreamErrorDialog';
 import InfoDialog from './layouts/InfoDialog';
 
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Typography, IconButton, CssBaseline, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { IconButton, CssBaseline, Paper } from '@material-ui/core';
 
 
 import { Route, HashRouter as Router, Redirect, Switch } from 'react-router-dom';
-import { SettingsApplicationsOutlined, InfoOutlined, SettingsRounded, SettingsOutlined } from '@material-ui/icons';
+import { InfoOutlined, SettingsOutlined } from '@material-ui/icons';
 import { StreamsProvider } from '../../providers/streams-context';
 
 
@@ -47,13 +47,13 @@ export default function Home() {
     return <StreamsProvider>
         <CssBaseline />
         <CloseStreamDialog token={closeStreamDialogToken} handleDialogClosed={() => setCloseStreamDialogToken(null)} />
-        <InfoDialog open={infoDialogOpen} handleClose={()=>setInfoDialogOpen(false)}/>
+        <InfoDialog open={infoDialogOpen} handleClose={() => setInfoDialogOpen(false)} />
         <CreateStreamErrorDialog data={createStreamErrorDialog} handleDialogClosed={() => setCreateStreamErrorDialog(false)} />
         <Router>
             <Sidebar handleCloseStream={(token) => closeStreamAttempted(token)} />
             <div className={classes.root}>
                 <Paper style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-                    <IconButton onClick={()=>setInfoDialogOpen(true)}>
+                    <IconButton onClick={() => setInfoDialogOpen(true)}>
                         <InfoOutlined />
                     </IconButton>
                     <IconButton>

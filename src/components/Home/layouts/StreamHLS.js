@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Typography, Container, Avatar, TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { deepPurple, purple, blueGrey, red, grey } from '@material-ui/core/colors';
+import { Button, Typography, Container} from '@material-ui/core';
 import { AirplayOutlined, PlaylistPlayOutlined, FolderOutlined } from '@material-ui/icons';
 
 import FlavouredInput from '../gadgets/FlavouredInput.js'
