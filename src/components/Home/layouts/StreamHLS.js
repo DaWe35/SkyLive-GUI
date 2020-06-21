@@ -17,14 +17,27 @@ export default function StreamHLS({ handleError }) {
 
     const [errors, setErrors] = useState(false)
 
-    const handleCreateStream = () => {
+    const handleCreateStream = (e) => {
+        e.preventDefault();
+        let currentErrors = {};
+        let hasErrors = false;
         if (!streamToken) {
-            setErrors({ token: "Cannot be empty" });
-            return;
-        } else {
-            setErrors(false);
+            currentErrors.token = "Cannot be empty";
+            hasErrors = true;
         }
-        Streams.createHlsStream(streamToken).catch(handleError);
+
+        if (!recordingFolder) {
+            currentErrors.dir = "Cannot be empty";
+            hasErrors = true;
+        }
+
+        if (hasErrors) {
+            setErrors(currentErrors);
+            return;
+        }
+
+        setErrors(false);
+        Streams.createHlsStream(streamToken, recordingFolder).catch(handleError);
     }
 
     const showDirectoryDialogBox = ()=>{
@@ -41,7 +54,7 @@ export default function StreamHLS({ handleError }) {
             <form style={{ display: 'flex', flexDirection: 'column', flex: 9 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-around' }}>
                     <FlavouredInput value={streamToken} onChange={setStreamToken} error={errors?errors.token:false} label="Stream Token" tooltip="Whatever you want" />
-                    <FlavouredInput value={recordingFolder} onChange={setRecordingFolder} label="Recording Folder" tooltip="Whatever you want"
+                    <FlavouredInput value={recordingFolder} onChange={setRecordingFolder} error={errors?errors.dir:false} label="Recording Folder" tooltip="Whatever you want"
                         endAdornment={{
                             icon: FolderOutlined,
                             onClick: showDirectoryDialogBox
@@ -49,7 +62,7 @@ export default function StreamHLS({ handleError }) {
                     />
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', marginBottom: 30, width: '100%', flex: 1 }}>
-                    <Button color='primary' onClick={handleCreateStream} startIcon={<AirplayOutlined />} variant="contained" size="large">Start Stream</Button>
+                    <Button type="submit" color='primary' onClick={handleCreateStream} startIcon={<AirplayOutlined />} variant="contained" size="large">Start Stream</Button>
                 </div>
             </form>
         </Container>

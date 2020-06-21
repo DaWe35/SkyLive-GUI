@@ -15,7 +15,8 @@ export default function StreamRTMP({ handleError }) {
     const [streamToken, setStreamToken] = useState("");
     const [errors, setErrors] = useState(false)
 
-    const handleCreateStream = () => {
+    const handleCreateStream = (e) => {
+        e.preventDefault();
         if (!streamToken) {
             setErrors({ token: "Cannot be empty" });
             return;
@@ -33,15 +34,14 @@ export default function StreamRTMP({ handleError }) {
         </div>
         <Container maxWidth='lg' style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <Typography variant="body1" style={{ flex: 1 }}>Some description text</Typography>
-
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 9 }}>
+            <form style={{ display: 'flex', flexDirection: 'column', flex: 9 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-around' }}>
                     <FlavouredInput value={streamToken} error={errors ? errors.token : false} onChange={setStreamToken} label="Stream Token" tooltip="Whatever you want" />
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', marginBottom: 30, width: '100%', flex: 2 }}>
-                    <Button color='primary' onClick={handleCreateStream} startIcon={<AirplayOutlined />} variant="contained" size="large">Start Stream</Button>
+                    <Button type="submit" color='primary' onClick={handleCreateStream} startIcon={<AirplayOutlined />} variant="contained" size="large">Start Stream</Button>
                 </div>
-            </div>
+            </form>
         </Container>
     </Container>
 }
