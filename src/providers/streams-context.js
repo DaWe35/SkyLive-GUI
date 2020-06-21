@@ -48,30 +48,41 @@ const StreamsProvider = props => {
             else res();
         })
             .then(() => fetchStreamData(token))
-            .then(res => {
-                ipcRenderer.send(channels.CREATE_STREAM, { token, command });
-                addStream(token, res.data);
-                //console.log(allStreams);
-                //console.log("this does run");
-                return res;
-            })
             .catch(err => {
                 console.error(err);
                 throw err;
             })
     }
 
-    const createHlsStream = (token) => {
-        return createStreamBasic(token, "blahblah");
+    const createHlsStream = (token, dir) => {
+        return createStreamBasic(token, "blahblah").then(res => {
+            ipcRenderer.send(channels.CREATE_HLS_STREAM, { token, dir });
+            addStream(token, res.data);
+            //console.log(allStreams);
+            //console.log("this does run");
+            return res;
+        });
     }
 
     const createRtmpStream = (token) => {
-        return createStreamBasic(token, "blahblah");
+        return createStreamBasic(token, "blahblah").then(res => {
+            ipcRenderer.send(channels.CREATE_RTMP_STREAM, { token });
+            addStream(token, res.data);
+            //console.log(allStreams);
+            //console.log("this does run");
+            return res;
+        })
 
     }
 
-    const createRestream = (token) => {
-        return createStreamBasic(token, "blahblah");
+    const createRestream = (token, url) => {
+        return createStreamBasic(token, "blahblah").then(res => {
+            ipcRenderer.send(channels.CREATE_RESTREAM, { token, url });
+            addStream(token, res.data);
+            //console.log(allStreams);
+            //console.log("this does run");
+            return res;
+        })
 
     }
 

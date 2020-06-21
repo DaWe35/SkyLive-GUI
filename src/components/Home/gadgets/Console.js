@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { makeStyles, useTheme, IconButton, Tooltip, Typography } from '@material-ui/core';
 import { InfoOutlined } from '@material-ui/icons';
 
@@ -10,10 +10,18 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+
 export default function Console({ label, tooltip, text, style }) {
+    const consoleRef = useRef(null)
     const theme = useTheme();
     const classes = useStyles(theme);
 
+    useEffect(() => {
+        // console.log("running as ", consoleRef.elem, consoleRef.scrollTop, consoleRef.current.scrollIntoView);
+        // if (!consoleRef.scrollTop) return;
+        consoleRef.current.scrollIntoView();
+    }//ref.current.offsetTop)
+        , [text])
     return <>
         <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
             {label}
@@ -23,8 +31,10 @@ export default function Console({ label, tooltip, text, style }) {
                 </IconButton>
             </Tooltip>
         </Typography>
-        <div style={{ ...style, display: 'flex', flexDirection: 'column', backgroundColor: 'black', justifyContent: 'space-around', overflow: 'scroll', minHeight: 0, padding: 15 }}>
-            <pre className={classes.greenHighlight} style={{ height: "100%", minHeight: 0, padding: 0, margin: 0 }}>{text}</pre>
+        <div style={{ ...style, display: 'flex', flexDirection: 'column', justifyContent: 'space-around', minHeight: 0, overflow: 'hidden' }}>
+            <pre className={classes.greenHighlight} style={{ backgroundColor: 'black', overflow: 'scroll', height: "100%", minHeight: 0, padding: 10, margin: 0 }}>{text}
+                <div ref={consoleRef} />
+            </pre>
         </div>
     </>
 }

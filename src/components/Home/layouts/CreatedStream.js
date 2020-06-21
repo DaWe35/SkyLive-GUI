@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Container, Avatar, TextField, IconButton, Tooltip } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { deepPurple, purple, blueGrey, red, grey } from '@material-ui/core/colors';
-import { AirplayOutlined, PlaylistPlayOutlined, FolderOutlined, InfoOutlined, StopOutlined, StopRounded, StopScreenShareOutlined, OpenInBrowserOutlined } from '@material-ui/icons';
+import { Button, Typography, Container} from '@material-ui/core';
+import { AirplayOutlined, PlaylistPlayOutlined, FolderOutlined, StopScreenShareOutlined, OpenInBrowserOutlined } from '@material-ui/icons';
 
 import Console from '../gadgets/Console.js';
 import { useStreams } from '../../../providers/streams-context.js';
@@ -15,7 +13,6 @@ export default function CreatedStream({ match, handleCloseStream }) {
     const Streams = useStreams();
     const token = match.params.token;
     const [output, setOutput] = useState("");
-    const [streamOpen, setStreamOpen] = useState(true);
 
     const handleBrowserOpen = (token) => {
         shell.openExternal('https://skylive.coolhd.hu/player?s=' + Streams.allStreams[token].streamid);
@@ -25,9 +22,8 @@ export default function CreatedStream({ match, handleCloseStream }) {
         if (!Streams.allStreams[token]) return;
         Streams.allStreams[token].output && setOutput(Streams.allStreams[token].output.join('\n'));
     }, [Streams.allStreams[token], token, Streams]);
-
     
-
+    
     return (!Streams.allStreams[token])
         ? <Redirect to="/" />
         : <Container maxWidth='lg' style={{ height: '100%', display: 'flex', flexDirection: 'column', paddingTop: 20, minHeight: 0 }}>
