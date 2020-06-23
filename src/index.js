@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route, Switch} from 'react-router-dom';
 
-import {UpdateNotifications} from './components/UpdateNotifications/UpdateNotifications.js';
+import UpdateNotifications from './components/UpdateNotifications/UpdateNotifications.js';
 import Home from './components/Home/Home.js'
 import { ThemeProvider } from '@material-ui/core';
 import theme from './theme.js';
-// import UpdateNotifications from './components/UpdateNotifications/UpdateNotifications.js';
 
 ReactDOM.render(
     <ThemeProvider theme={theme}>

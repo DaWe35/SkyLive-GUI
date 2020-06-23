@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'typeface-roboto';
 import Sidebar from './layouts/Sidebar';
 import StreamRTMP from './layouts/StreamRTMP';
 import StreamHLS from './layouts/StreamHLS';
 import Restream from './layouts/Restream';
 import CreatedStream from './layouts/CreatedStream';
-
-
 
 import CloseStreamDialog from './layouts/CloseStreamDialog';
 import CreateStreamErrorDialog from './layouts/CreateStreamErrorDialog';
@@ -21,6 +19,8 @@ import { Route, HashRouter as Router, Redirect, Switch } from 'react-router-dom'
 import { InfoOutlined, SettingsOutlined } from '@material-ui/icons';
 import { StreamsProvider } from '../../providers/streams-context';
 
+// import { channels } from '../../shared/constants.js';
+// const { ipcRenderer } = window;
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -41,8 +41,9 @@ export default function Home() {
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
 
 
-    const closeStreamAttempted = (token) => { setCloseStreamDialogToken(token) }
+    const closeStreamAttempted = (token) => { setCloseStreamDialogToken(token) };
 
+    // useEffect(() => ipcRenderer.on(channels.UPDATE_START, () => alert("DUMMY")), []);
 
     return <StreamsProvider>
         <CssBaseline />

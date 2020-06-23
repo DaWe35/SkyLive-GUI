@@ -9,10 +9,12 @@ import {channels} from './../../shared/constants.js';
 const { ipcRenderer } = window;
 
 export default function UpdateNotifications() {
-    React.useEffect(()=>ipcRenderer.send("update_start"), []);
+    React.useEffect(()=>ipcRenderer.send(channels.UPDATE_START), []);
+
+    React.useEffect(()=>ipcRenderer.on(channels.UPDATE_START, ()=>console.log("I RANNN")), []);
 
     return <>
-        <BasicNotifierOnIpcSignal signal={channels.UPDATE_STARTING} message={"Starting the updater..."}/>
+        <BasicNotifierOnIpcSignal signal={channels.UPDATE_START} message={"Starting the updater..."}/>
         <BasicNotifierOnIpcSignal signal={channels.UPDATE_CHECKING} message={"Checking for updates..."}/>
         <BasicNotifierOnIpcSignal signal={channels.UPDATE_ERROR} message={"Updater failed. Check logs for more info."}/>
         <BasicNotifierOnIpcSignal signal={channels.UPDATE_NOT_AVAILABLE} message={"Already on later version."}/>
@@ -22,11 +24,12 @@ export default function UpdateNotifications() {
 }
 
 
-function BasicNotifierOnIpcSignal(signal, message) {
+function BasicNotifierOnIpcSignal({signal, message}) {
     const [open, setOpen] = React.useState(false);
 
     ipcRenderer.on(signal, (event, err) => {
         // alert(JSON.stringify(err));
+        console.log("I RAN");
         ipcRenderer.removeAllListeners(signal);
         setOpen(true);
     });

@@ -58,5 +58,5 @@
     "electron-builder": "^22.7.0",
     "run-script-os": "^1.1.1"
   },
-  "homepage": "https://github.com/DaWe35/SkyLive-GUI#readme"
+  "homepage": "./"
 }
