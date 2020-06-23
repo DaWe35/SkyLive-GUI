@@ -145,7 +145,7 @@ function Sidebar({ history, handleCloseStream }) {
                 <List className={clsx(classes.navList, classes.overrideLink)}
                     subheader={
                         <ListSubheader>
-                            Open Streams
+                            On Air
                     </ListSubheader>
                     }
                 >
