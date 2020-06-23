@@ -4,6 +4,7 @@ import { withStyles, Button as MuiButton } from "@material-ui/core";
 const Button = withStyles((theme) => ({
     root: {
         color: "white",
+        textTransform: "none",
         borderWidth: 2,
         '&:hover': {
             borderWidth: 2
