@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Typography, Container } from '@material-ui/core';
+import { Typography, Container } from '@material-ui/core';
+import Button from './../../../atoms/button.js';
 import { AirplayOutlined, LowPriorityOutlined } from '@material-ui/icons';
 import FlavouredInput from '../gadgets/FlavouredInput';
 import { useStreams } from '../../../providers/streams-context';

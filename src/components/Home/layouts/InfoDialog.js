@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Dialog, DialogContent, DialogActions, Typography, LinearProgress } from '@material-ui/core';
+import { Dialog, DialogContent, DialogActions, Typography, LinearProgress } from '@material-ui/core';
 import { GitHub, PlayArrow } from '@material-ui/icons';
+import Button from './../../../atoms/button.js';
+
 
 import { channels, updateStates } from './../../../shared/constants.js';
 
