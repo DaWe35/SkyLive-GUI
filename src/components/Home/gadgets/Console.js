@@ -10,6 +10,21 @@ const useStyles = makeStyles(theme => ({
         '&::selection': {
             backgroundColor: theme.palette.primary.light
         }
+    },
+    customScroll: {
+        '&::-webkit-scrollbar': {
+            width: '10px'
+        },
+        '&::-webkit-scrollbar-track': {
+            backgroundColor: theme.palette.background.default,
+        },
+        '&::-webkit-scrollbar-thumb': {
+            background: theme.palette.primary.light,
+            outline: '1px solid slategrey'
+        },
+        '&::-webkit-scrollbar-corner': {
+            backgroundColor: theme.palette.background.default
+        }
     }
 }));
 
@@ -34,8 +49,8 @@ export default function Console({ label, tooltip, text, style, noTitle, hidden }
                 </IconButton>
             </Tooltip>
         </Typography>}
-        <div style={{ ...style, display: hidden===undefined?'flex':(hidden?'none':'flex'), flexDirection: 'column', justifyContent: 'space-around', minHeight: 0, overflow: 'hidden'}}>
-            <pre className={classes.greenHighlight} style={{ backgroundColor: 'black', overflow: 'scroll', height: "100%", minHeight: 0, padding: 10, margin: 0 }}>{text}
+        <div style={{ ...style, display: hidden === undefined ? 'flex' : (hidden ? 'none' : 'flex'), flexDirection: 'column', justifyContent: 'space-around', minHeight: 0, overflow: 'hidden' }}>
+            <pre className={`${classes.greenHighlight} ${classes.customScroll}`} style={{ backgroundColor: 'black', overflow: 'scroll', height: "100%", minHeight: 0, padding: 10, margin: 0 }}>{text}
                 <div ref={consoleRef} />
             </pre>
         </div>
