@@ -16,7 +16,8 @@ import { IconButton, CssBaseline, Paper } from '@material-ui/core';
 
 
 import { Route, HashRouter as Router, Redirect, Switch } from 'react-router-dom';
-import { InfoOutlined, SettingsOutlined } from '@material-ui/icons';
+import { InfoOutlined } from '@material-ui/icons';
+// import { SettingsOutlined } from '@material-ui/icons';
 import { StreamsProvider } from '../../providers/streams-context';
 
 // import { channels } from '../../shared/constants.js';
