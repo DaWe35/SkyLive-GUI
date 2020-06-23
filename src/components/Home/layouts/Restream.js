@@ -9,7 +9,7 @@ import Loader from '../gadgets/Loader';
 
 
 
-export default function Restream({ handleError }) {
+export default function Restream({ history, handleError }) {
     // const classes = useStyles();
 
     const Streams = useStreams();
@@ -39,7 +39,7 @@ export default function Restream({ handleError }) {
 
         setErrors(false);
         setLoading(true);
-        Streams.createRestream(streamToken, streamURL).catch(handleError).finally(()=>setLoading(false));
+        Streams.createRestream(streamToken, streamURL).then(()=>history.push('/stream/'+streamToken)).catch(handleError).finally(()=>setLoading(false));
     }
 
     return <>

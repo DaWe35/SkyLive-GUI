@@ -10,7 +10,7 @@ import Loader from '../gadgets/Loader';
 
 
 
-export default function StreamRTMP({ handleError }) {
+export default function StreamRTMP({ history, handleError }) {
     // const classes = useStyles();
     const Streams = useStreams();
     const [streamToken, setStreamToken] = useState("");
@@ -26,7 +26,7 @@ export default function StreamRTMP({ handleError }) {
             setErrors(false);
         }
         setLoading(true);
-        Streams.createRtmpStream(streamToken).catch(handleError).finally(() => setLoading(false));
+        Streams.createRtmpStream(streamToken).then(()=>history.push('/stream/'+streamToken)).catch(handleError).finally(() => setLoading(false));
     }
 
 

@@ -11,7 +11,7 @@ import Loader from '../gadgets/Loader.js';
 const { dialog, currentWindow, shell } = window;
 
 
-export default function StreamHLS({ handleError }) {
+export default function StreamHLS({ history, handleError }) {
     const Streams = useStreams();
     const [streamToken, setStreamToken] = useState("");
     const [recordingFolder, setRecordingFolder] = useState("");
@@ -39,7 +39,7 @@ export default function StreamHLS({ handleError }) {
 
         setErrors(false);
         setLoading(true);
-        Streams.createHlsStream(streamToken, recordingFolder).catch(handleError).finally(() => setLoading(false));
+        Streams.createHlsStream(streamToken, recordingFolder).then(()=>history.push('/stream/'+streamToken)).catch(handleError).finally(() => setLoading(false));
     }
 
     const showDirectoryDialogBox = () => {
