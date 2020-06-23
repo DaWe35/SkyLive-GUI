@@ -42,7 +42,7 @@ export default function StreamRTMP({ handleError }) {
                         <FlavouredInput value={streamToken} error={errors ? errors.token : false} onChange={setStreamToken} label="Stream Token" tooltip="Whatever you want" />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', marginBottom: 30, width: '100%', flex: 2 }}>
-                        <Button type="submit" color='primary' onClick={handleCreateStream} startIcon={<AirplayOutlined />} variant="contained" size="large">Start Stream</Button>
+                        <Button type="submit" color='primary' onClick={handleCreateStream} startIcon={<AirplayOutlined />} variant="outlined" size="large">Start Stream</Button>
                     </div>
                 </form>
             </Container>

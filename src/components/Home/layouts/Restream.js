@@ -56,7 +56,7 @@ export default function Restream({ handleError }) {
                         <FlavouredInput value={streamURL} onChange={setStreamURL} error={errors ? errors.url : false} label="Stream URL" tooltip="Whatever you want" />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', marginBottom: 30, width: '100%', flex: 1 }}>
-                        <Button type="submit" color='primary' onClick={handleCreateStream} startIcon={<AirplayOutlined />} variant="contained" size="large">Start Restreaming</Button>
+                        <Button type="submit" color='primary' onClick={handleCreateStream} startIcon={<AirplayOutlined />} variant="outlined" size="large">Start Restreaming</Button>
                     </div>
                 </form>
             </Container>

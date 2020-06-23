@@ -63,7 +63,7 @@ export default function CreatedStream({ match, handleCloseStream }) {
                     }
 
                     <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'flex-end', marginBottom: 30, width: '100%', flex: 1 }}>
-                        <Button color='primary' onClick={() => handleBrowserOpen(token)} startIcon={<OpenInBrowserOutlined />} variant="contained">Open In Browser</Button>
+                        <Button color='primary' onClick={() => handleBrowserOpen(token)} startIcon={<OpenInBrowserOutlined />} variant="outlined">Open In Browser</Button>
                         <Button color='secondary' onClick={() => handleCloseStream(token)} startIcon={<StopScreenShareOutlined />} variant="contained">Stop Stream</Button>
                     </div>
                 </div>
