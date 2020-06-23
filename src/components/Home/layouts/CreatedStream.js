@@ -29,7 +29,7 @@ export default function CreatedStream({ match, handleCloseStream }) {
         if (!Streams.allStreams[token]) return;
         console.log(Streams.allStreams[token].output);
         Streams.allStreams[token].output && setOutput(Streams.allStreams[token].output);
-    }, [Streams.allStreams[token], token, Streams]);
+    }, [Streams.allStreams, token]);
 
 
     return (!Streams.allStreams[token])
