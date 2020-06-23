@@ -11,8 +11,18 @@ First clone the repository. Then run:
 ```
 cd SkyLive-GUI
 npm install
-npm start //starts the dev server
-npm run start-electron //starts electron
+```
+
+To start the dev-server:
+
+```
+npm start
+```
+
+To start the app:
+
+```
+npm run start-electron #starts electron
 ```
 
 Please note that app runs in development mode.
