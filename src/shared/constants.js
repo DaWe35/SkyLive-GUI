@@ -16,4 +16,12 @@ module.exports = {
     STREAM_DATA: 'stream_data',
     CLOSE_STREAM: 'close_stream'
   },
+  updateStates: {
+    STARTED: 'started',
+    CHECKING: 'checking',
+    NOT_AVAILABLE: 'not_available',
+    DOWNLOADING: 'downloading',
+    DOWNLOADED: 'downloaded',
+    ERROR: 'error'
+  }
 };
