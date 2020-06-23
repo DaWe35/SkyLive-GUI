@@ -57,9 +57,9 @@ export default function Home() {
                     <IconButton onClick={() => setInfoDialogOpen(true)}>
                         <InfoOutlined />
                     </IconButton>
-                    <IconButton>
+                    {/* <IconButton>
                         <SettingsOutlined />
-                    </IconButton>
+                    </IconButton> */}
                 </Paper>
                 <Switch>
                     <Route path="/stream_rtmp" exact render={(props) => <StreamRTMP {...props} handleError={(err) => setCreateStreamErrorDialog(err)} />} />
