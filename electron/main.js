@@ -3,16 +3,10 @@ const path = require('path');
 const url = require('url');
 
 
-
-const { channels } = require('../src/shared/constants');
+const { channels } = require('../src/shared/constants.js');
 const { setUpStreams } = require('./streams.js');
-// const { autoUpdater } = require('electron-updater');
-// const log = require('electron-log');
-// const Store = require('electron-store');
-// const store = new Store();
+const { setUpUpdates } = require('./updates.js')
 
-// autoUpdater.logger = log;
-// autoUpdater.logger.transports.file.level = "info";
 let mainWindow;
 
 function createWindow() {
@@ -33,6 +27,7 @@ function createWindow() {
         mainWindow = null;
     });
     setUpStreams(mainWindow);
+    setUpUpdates(mainWindow);
 }
 
 // app.setAppLogsPath();
@@ -52,46 +47,4 @@ app.on('activate', function () {
 
 ipcMain.on(channels.OPEN_BROWSER, ({ url }) => {
     shell.openExternal(url);
-
 });
-
-// ipcMain.on("JWT_DELETE", (event)=>{
-//     store.delete("JWT");
-//     log.info("JWT set to deleted");
-// });
-
-// ipcMain.on("update_start", ()=>{
-//     autoUpdater.checkForUpdatesAndNotify();
-//     mainWindow.webContents.send('update_starting_process');
-//     log.info("starting updater");
-// })
-
-// autoUpdater.on('checking-for-update', () => {
-//     // log.info("CHECKING");
-//     mainWindow.webContents.send('update_checking');
-// });
-
-// autoUpdater.on('update-not-available', (info) => {
-//     // log.info("NO");
-//     mainWindow.webContents.send('update_not_available');
-// });
-
-// autoUpdater.on('update-available', () => {
-//     // log.info("YES");
-//     mainWindow.webContents.send('update_available');
-// });
-
-// autoUpdater.on('update-downloaded', () => {
-//     // log.info("DOWNLAODED");
-//     mainWindow.webContents.send('update_downloaded');
-// });
-
-// autoUpdater.on('error', (err) => {
-//     // log.info(err);
-//     mainWindow.webContents.send('update_error',err);
-// });
-
-// ipcMain.on('restart_app', () => {
-//     // log.info("BYEBYE");
-//     autoUpdater.quitAndInstall();
-// });

@@ -3,12 +3,14 @@
   "productName": "SkyLive",
   "main": "electron/main.js",
   "version": "0.1.0",
-  "private": true,
+  "repository": "github:DaWe35/SkyLive-GUI",
   "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.2",
     "cross-spawn": "^7.0.3",
+    "electron-log": "^4.2.2",
+    "electron-updater": "^4.3.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
@@ -17,18 +19,21 @@
     "typeface-roboto": "0.0.75"
   },
   "scripts": {
-    "start": "export BROWSER=none && react-scripts start",
-    "start-win": "set \"BROWSER=none\" && react-scripts start",
-    "build": "react-scripts build",
+    "start": "run-script-os",
+    "start:linux:darwin": "export BROWSER=none && react-scripts start",
+    "start:win32": "set \"BROWSER=none\" && react-scripts start",
+    "build": "react-scripts build && npm run build-electron",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-electron": "export ELECTRON_START_URL=http://localhost:3000  && electron .",
-    "start-electron-win": "set \"ELECTRON_START_URL=http://localhost:3000\"  && electron .",
-    "build-electron": "mkdir build/src && cp -r electron/. build/electron && cp -r src/shared/. build/src/shared && cp commands.js build/",
+    "start-electron": "run-script-os",
+    "start-electron:darwin:linux": "export ELECTRON_START_URL=http://localhost:3000  && electron .",
+    "start-electron:win32": "set \"ELECTRON_START_URL=http://localhost:3000\"  && electron .",
+    "build-electron": "run-script-os",
+    "build-electron:win32": "mkdir build\\src && xcopy electron build\\electron\\ && xcopy src\\shared\\ build\\src\\shared\\ && xcopy commands.js build\\",
+    "build-electron:darwin:linux": "mkdir build/src && cp -r electron/. build/electron && cp -r src/shared/. build/src/shared && cp commands.js build/",
     "package": "electron-builder build --linux --win -c.extraMetadata.main=build/electron/main.js --publish never",
-    "package-linux": "electron-builder build --linux -c.extraMetadata.main=build/electron/main.js --publish never",
-    "package-win": " electron-builder build --win -c.extraMetadata.main=build/electron/main.js --publish never",
-    "deploy": "electron-builder build --linux --win -c.extraMetadata.main=build/electron/main.js --publish always"
+    "package:linux:darwin": "electron-builder build --linux -c.extraMetadata.main=build/electron/main.js --publish never",
+    "package:win": " electron-builder build --win -c.extraMetadata.main=build\\electron\\main.js --publish never"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,7 +55,8 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "electron": "^9.0.3",
-    "electron-builder": "^22.7.0"
+    "electron-builder": "^22.7.0",
+    "run-script-os": "^1.1.1"
   },
-  "homepage": "./"
+  "homepage": "https://github.com/DaWe35/SkyLive-GUI#readme"
 }

@@ -1,22 +1,22 @@
-appId: hu.coolhdskylive
-# publish:
-#   provider: github
-#   token: 
-#   repo:
-#   owner:
+appId: hu.coolhd.skylive
+
+publish:
+  provider: github
+
 win:
-  extraResources:    
+  extraResources:
     - bin/windows/**/*
-  # publish:
-  #   - github
   target: NSIS
 
 linux:
   extraResources:
     - bin/linux/**/*
-  # publish:
-  #   - github
   target: AppImage
+
 files:
   - build/**/*
   - node_modules/**/*
+
+nsis:
+  oneClick: false
+  perMachine: true
