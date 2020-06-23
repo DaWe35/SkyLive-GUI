@@ -51,6 +51,10 @@ const useStyles = makeStyles(theme => ({
     logo: {
         maxWidth: '100%'
     },
+    icon: {
+        color: theme.palette.text.primary,
+    },
+
     closeIcon: {
         color: theme.palette.text.secondary,
         '&:mouseover': {
@@ -136,7 +140,7 @@ function Sidebar({ history, handleCloseStream }) {
                 >
                     {homeTabs.map((tab, index) => (
                         <ListItem button onClick={() => history.push(tab.to)} selected={window.location.href.split('#')[1] === tab.to ? true : false}>
-                            <ListItemIcon><tab.icon style={{ color: 'white' }} /></ListItemIcon>
+                            <ListItemIcon><tab.icon className={classes.icon}/></ListItemIcon>
                             <ListItemText primary={tab.title} />
                         </ListItem>
                     ))}
@@ -151,7 +155,7 @@ function Sidebar({ history, handleCloseStream }) {
                 >
                     {openStreamTabs.map((tab, index) => (
                         <ListItem button onClick={() => history.push('/stream/' + tab.token)} selected={window.location.href.split('#')[1] === tab.to ? true : false}>
-                            <ListItemIcon><tab.icon style={{ color: 'white' }} /></ListItemIcon>
+                            <ListItemIcon><tab.icon className={classes.icon} /></ListItemIcon>
                             <Tooltip title={tab.title}>
                                 <ListItemText primary={tab.title} primaryTypographyProps={{ style: { whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflowX: 'hidden' } }} />
                             </Tooltip>
