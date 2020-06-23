@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Dialog, DialogContent, DialogActions, Typography, LinearProgress } from '@material-ui/core';
-import { GitHub, FeedbackOutlined } from '@material-ui/icons';
+import { GitHub, PlayArrow } from '@material-ui/icons';
 
 import { channels, updateStates } from './../../../shared/constants.js';
 
@@ -54,13 +54,10 @@ export default function InfoDialog({ open, handleClose }) {
                     </div>
                     <div style={{ flex: 2, margin: 20, marginBottom: 0, justifyContent: "center", alignItems: "center" }}>
                         <Typography gutterBottom>
-                            Some about text could go here.
+                            SkyLive-GUI is a wrapper for the command line SkyLive. It provides non custodial streaming, so you can broadcast live videos without a centralized server.
                         </Typography>
                         <Typography gutterBottom>
-                            Some more text could go here.
-                        </Typography>
-                        <Typography gutterBottom>
-                            And more about text could go here too.
+                            Made by d4mr & DaWe
                         </Typography>
                         <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop:20, paddingBottom:20}}>
                             <Typography variant="subtitle2" >
@@ -78,8 +75,8 @@ export default function InfoDialog({ open, handleClose }) {
                                 GitHub
                             </Button>
 
-                            <Button startIcon={<FeedbackOutlined />} onClick={() => shell.openExternal("https://coolhd.hu/contact/")}>
-                                Feedback
+                            <Button startIcon={<PlayArrow />} onClick={() => shell.openExternal("https://skylive.coolhd.hu")}>
+                                Watch SkyLive
                             </Button>
                         </div>
                     </div>
@@ -90,7 +87,7 @@ export default function InfoDialog({ open, handleClose }) {
                     v{version}
                 </Typography>
                 <Button autoFocus onClick={handleClose} color="primary">
-                    Exit
+                    Close
                 </Button>
             </DialogActions>
         </Dialog>
