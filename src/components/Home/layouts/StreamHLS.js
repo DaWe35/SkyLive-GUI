@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Typography, Container} from '@material-ui/core';
+import { Typography, Container} from '@material-ui/core';
+import Button from './../../../atoms/button.js';
+
 import { AirplayOutlined, PlaylistPlayOutlined, FolderOutlined } from '@material-ui/icons';
 
 import FlavouredInput from '../gadgets/FlavouredInput.js'

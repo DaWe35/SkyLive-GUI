@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, Button, DialogActions } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
+import Button from './../../../atoms/button.js';
 import { useStreams } from '../../../providers/streams-context';
 
 export default function CloseStreamDialog({token, handleDialogClosed}) {
