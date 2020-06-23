@@ -32,8 +32,12 @@
     "build-electron:win32": "mkdir build\\src && xcopy electron build\\electron\\ /E/H/C/I && xcopy src\\shared build\\src\\shared\\ /E/H/C/I && xcopy commands.js build\\",
     "build-electron:darwin:linux": "mkdir build/src && cp -r electron/. build/electron && cp -r src/shared/. build/src/shared && cp commands.js build/",
     "package": "run-script-os",
-    "package:linux:darwin": "electron-builder build --linux -c.extraMetadata.main=build/electron/main.js --publish never",
-    "package:win": " electron-builder build --win -c.extraMetadata.main=build\\electron\\main.js --publish never"
+    "package:linux": "electron-builder build --linux -c.extraMetadata.main=build/electron/main.js --publish never",
+    "package:win": "electron-builder build --win -c.extraMetadata.main=build\\electron\\main.js --publish never",
+    "package:darwin": "electron-builder build --macos -c.extraMetadata.main=build/electron/main.js --publish never",
+    "package-all": "run-script-os",
+    "package-all:win": "electron-builder build --win --linux --macos -c.extraMetadata.main=build\\electron\\main.js --publish never",
+    "package-all:darwin:linux": "electron-builder build --win --linux --macos -c.extraMetadata.main=build/electron/main.js --publish never"
   },
   "eslintConfig": {
     "extends": "react-app"

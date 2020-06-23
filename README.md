@@ -1,3 +1,5 @@
+![Build/release](https://github.com/DaWe35/SkyLive-GUI/workflows/Build/release/badge.svg)
+
 # SkyLive-GUI
 
 Graphical user interface for https://github.com/DaWe35/SkyLive
