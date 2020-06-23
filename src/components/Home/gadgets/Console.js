@@ -4,6 +4,9 @@ import { InfoOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
     greenHighlight: {
+        borderWidth: '1px',
+        borderColor: theme.palette.primary.main,
+        borderStyle: 'solid',
         '&::selection': {
             backgroundColor: theme.palette.primary.light
         }
@@ -31,7 +34,7 @@ export default function Console({ label, tooltip, text, style, noTitle, hidden }
                 </IconButton>
             </Tooltip>
         </Typography>}
-        <div style={{ ...style, display: hidden===undefined?'flex':(hidden?'none':'flex'), flexDirection: 'column', justifyContent: 'space-around', minHeight: 0, overflow: 'hidden' }}>
+        <div style={{ ...style, display: hidden===undefined?'flex':(hidden?'none':'flex'), flexDirection: 'column', justifyContent: 'space-around', minHeight: 0, overflow: 'hidden'}}>
             <pre className={classes.greenHighlight} style={{ backgroundColor: 'black', overflow: 'scroll', height: "100%", minHeight: 0, padding: 10, margin: 0 }}>{text}
                 <div ref={consoleRef} />
             </pre>
