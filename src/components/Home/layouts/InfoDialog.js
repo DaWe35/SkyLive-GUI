@@ -52,14 +52,21 @@ export default function InfoDialog({ open, handleClose }) {
             <DialogContent>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flex: 1 }}>
-                        <img style={{ maxWidth: "100%" }} src={process.env.PUBLIC_URL + '/logo-1.svg'} alt='logo' />
+                        <img style={{ maxWidth: "100%" }} src={process.env.PUBLIC_URL + '/skylive.png'} alt='logo' />
                     </div>
                     <div style={{ flex: 2, margin: 20, marginBottom: 0, justifyContent: "center", alignItems: "center" }}>
                         <Typography gutterBottom>
                             SkyLive-GUI is a wrapper for the command line SkyLive. It provides non custodial streaming, so you can broadcast live videos without a centralized server.
                         </Typography>
-                        <Typography gutterBottom>
-                            Made by d4mr & DaWe
+                        <Typography style={{ fontStyle: "italic" }} gutterBottom>
+                            Made by 
+                            <Button onClick={() => shell.openExternal("https://github.com/d4mr")} style={{ padding: "5px", minWidth: 0, fontStyle: "italic" }}>
+                                d4mr
+                            </Button>
+                             & 
+                            <Button onClick={() => shell.openExternal("https://github.com/DaWe35")} style={{ padding: "5px", minWidth: 0, fontStyle: "italic" }}>
+                                DaWe
+                            </Button>
                         </Typography>
                         <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop:20, paddingBottom:20}}>
                             <Typography variant="subtitle2" >

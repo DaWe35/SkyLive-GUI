@@ -128,7 +128,7 @@ function Sidebar({ history, handleCloseStream }) {
             anchor="left"
         >
             <Toolbar className={classes.toolbar}>
-                <img src={process.env.PUBLIC_URL + '/logo-1.svg'} alt='logo' className={classes.logo} />
+                <img src={process.env.PUBLIC_URL + '/skylive.png'} alt='logo' className={classes.logo} />
             </Toolbar>
             <div className={classes.navArea}>
                 <List className={clsx(classes.navList, classes.overrideLink)}
