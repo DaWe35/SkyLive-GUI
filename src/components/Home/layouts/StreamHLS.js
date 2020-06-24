@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Container} from '@material-ui/core';
 import Button from './../../../atoms/button.js';
 
-import { AirplayOutlined, PlaylistPlayOutlined, FolderOutlined } from '@material-ui/icons';
+import { AirplayOutlined, PlaylistPlayOutlined, FolderOutlined, OpenInBrowserOutlined } from '@material-ui/icons';
 
 import FlavouredInput from '../gadgets/FlavouredInput.js'
 import { useStreams } from '../../../providers/streams-context.js';
@@ -53,6 +53,10 @@ export default function StreamHLS({ history, handleError }) {
         setRecordingFolder(dialog.showOpenDialogSync(currentWindow, { properties: ['openDirectory'] }));
     }
 
+    const showInDirectory = () => {
+        shell.openItem('C:\\Users\\Hp\\.SkyLive') // ~/.SkyLive is the working directory path.
+    }
+
     const [state, setState] = React.useState({
         keepFiles: true,
     });
@@ -92,6 +96,7 @@ export default function StreamHLS({ history, handleError }) {
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
                                     <FormControlLabel control={<Checkbox checked={state.keepFiles} onChange={handleChange} name="keepFiles" color="primary"/>} label="Keep video files on disk" />
+                                    <Button color='primary' onClick={ showInDirectory } startIcon={<OpenInBrowserOutlined />} variant="outlined">Open SkyLive folder</Button>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>
                         </div>
