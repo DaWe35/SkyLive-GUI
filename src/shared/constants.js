@@ -1,6 +1,7 @@
 module.exports = {
   channels: {
     APP_INFO: 'app_info',
+    USER_WORKING_DIRECTORY: 'user_working_directory',
     UPDATE_START: 'update_start',
     UPDATE_ERROR: 'update_error',
     UPDATE_CHECKING: 'update_checking',

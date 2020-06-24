@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Container} from '@material-ui/core';
 import Button from './../../../atoms/button.js';
 
@@ -8,6 +8,8 @@ import FlavouredInput from '../gadgets/FlavouredInput.js'
 import { useStreams } from '../../../providers/streams-context.js';
 import Loader from '../gadgets/Loader.js';
 
+import { channels } from '../../../shared/constants.js';
+
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -15,15 +17,17 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-const { dialog, currentWindow, shell } = window;
+const { dialog, currentWindow, shell, ipcRenderer } = window;
 
 
 export default function StreamHLS({ history, handleError }) {
     const Streams = useStreams();
     const [streamToken, setStreamToken] = useState("");
     const [recordingFolder, setRecordingFolder] = useState("");
+    const [userWorkingDirectory, setUserWorkingDirectory] = useState("");
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(false)
+    const [keepFiles, setKeepFiles] = React.useState(true);
 
     const handleCreateStream = (e) => {
         e.preventDefault();
@@ -54,16 +58,18 @@ export default function StreamHLS({ history, handleError }) {
     }
 
     const showInDirectory = () => {
-        shell.openItem('C:\\Users\\Hp\\.SkyLive') // ~/.SkyLive is the working directory path.
+        shell.openExternal('file://'+userWorkingDirectory) // ~/.SkyLive is the working directory path.
     }
 
-    const [state, setState] = React.useState({
-        keepFiles: true,
-    });
-    
-    const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
+    useEffect(()=> {
+        ipcRenderer.send(channels.USER_WORKING_DIRECTORY);
+        const listener = (event, dir) => {
+            setUserWorkingDirectory(dir);
+        }
+        ipcRenderer.on(channels.USER_WORKING_DIRECTORY, listener);
+
+        return ()=>ipcRenderer.removeListener(channels.USER_WORKING_DIRECTORY, listener);
+    }, []);
 
 
     return <>
@@ -95,7 +101,7 @@ export default function StreamHLS({ history, handleError }) {
                                     <Typography>Advanced</Typography>
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
-                                    <FormControlLabel control={<Checkbox checked={state.keepFiles} onChange={handleChange} name="keepFiles" color="primary"/>} label="Keep video files on disk" />
+                                    <FormControlLabel control={<Checkbox checked={keepFiles} onChange={(event)=>setKeepFiles(event.target.checked)} name="keepFiles" color="primary"/>} label="Keep video files on disk" />
                                     <Button color='primary' onClick={ showInDirectory } startIcon={<OpenInBrowserOutlined />} variant="outlined">Open SkyLive folder</Button>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>

@@ -5,7 +5,10 @@ const url = require('url');
 
 const { channels } = require('../src/shared/constants.js');
 const { setUpStreams } = require('./streams.js');
-const { setUpUpdates } = require('./updates.js')
+const { setUpUpdates } = require('./updates.js');
+const fs = require('fs');
+
+const HOME_DIRECTORY = path.join(app.getPath('home'), '.SkyLive');
 
 let mainWindow;
 
@@ -47,4 +50,10 @@ app.on('activate', function () {
 
 ipcMain.on(channels.OPEN_BROWSER, ({ url }) => {
     shell.openExternal(url);
+});
+
+ipcMain.on(channels.USER_WORKING_DIRECTORY, (event) => {
+    fs.promises.access(HOME_DIRECTORY, fs.constants.F_OK)
+        .catch(()=>fs.promises.mkdir(HOME_DIRECTORY))
+        .finally(event.sender.send(channels.USER_WORKING_DIRECTORY, HOME_DIRECTORY));
 });
