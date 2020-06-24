@@ -8,7 +8,7 @@ function getRtmpStreamArguments(token) {
 
 // In order to specify arguments to multiple processes, specify an object, with keys labelled the same as keys on "platformBinaries"
 function getRestreamArguments(token, url) {
-    return {processOne: ["--token",token, "--record_folder",token], processTwo: ["--url",url, "--record_folder",token]};
+    return {uploader: ["--token",token, "--record_folder",token], downloader: ["--url",url, "--record_folder",token]};
 }
 
 module.exports = {

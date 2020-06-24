@@ -16,7 +16,7 @@ function createWindow() {
         slashes: true,
     });
     mainWindow = new BrowserWindow({
-        width: 1280, height: 720,
+        width: 1000, height: 570,
         webPreferences: { webviewTag: true, preload: path.join(__dirname, 'preload.js') }
     });
     !(process.env.ELECTRON_START_URL) && Menu.setApplicationMenu(null);

@@ -25,8 +25,8 @@ const platformBinaries = {
     // Not specifying correct keys will have unexpected results
     // [NOTE: DO NOT USE '__MULTI__' as key]
     restream: {
-        linux: { processOne: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'), processTwo: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript') },
-        win32: { processOne: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe'), processTwo: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_downloader.exe') }
+        linux: { uploader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'), downloader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript') },
+        win32: { uploader: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe'), downloader: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_downloader.exe') }
     }
 }
 
