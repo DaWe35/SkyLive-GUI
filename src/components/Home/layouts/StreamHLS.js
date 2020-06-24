@@ -8,6 +8,13 @@ import FlavouredInput from '../gadgets/FlavouredInput.js'
 import { useStreams } from '../../../providers/streams-context.js';
 import Loader from '../gadgets/Loader.js';
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
 const { dialog, currentWindow, shell } = window;
 
 
@@ -46,6 +53,14 @@ export default function StreamHLS({ history, handleError }) {
         setRecordingFolder(dialog.showOpenDialogSync(currentWindow, { properties: ['openDirectory'] }));
     }
 
+    const [state, setState] = React.useState({
+        keepFiles: true,
+    });
+    
+    const handleChange = (event) => {
+        setState({ ...state, [event.target.name]: event.target.checked });
+    };
+
 
     return <>
         <Loader open={loading}/>
@@ -70,6 +85,16 @@ export default function StreamHLS({ history, handleError }) {
                                 onClick: showDirectoryDialogBox
                             }}
                         />
+                        <div style={{ marginTop: '10px' }}>
+                            <ExpansionPanel>
+                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+                                    <Typography>Advanced</Typography>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                    <FormControlLabel control={<Checkbox checked={state.keepFiles} onChange={handleChange} name="keepFiles" color="primary"/>} label="Keep video files on disk" />
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
+                        </div>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', marginBottom: 30, width: '100%', flex: 1 }}>
                         <Button type="submit" color='primary' onClick={handleCreateStream} startIcon={<AirplayOutlined />} variant="outlined" size="large">Start Stream</Button>
