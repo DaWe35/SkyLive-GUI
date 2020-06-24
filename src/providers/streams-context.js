@@ -4,7 +4,7 @@ const { ipcRenderer } = window;
 
 const StreamsContext = React.createContext();
 
-
+const MAX_SCROLL_LIMIT = 1000;
 
 function fetchStreamData(token) {
     return new Promise((resolve, reject) => {
@@ -118,6 +118,7 @@ const StreamsProvider = props => {
             }
             
             newAllStreams = { ...allStreams };
+            if (newOutput.length > MAX_SCROLL_LIMIT) newOutput.shift();
             newAllStreams[token].output = newOutput;
             setAllStreams(newAllStreams);
         }
