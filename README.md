@@ -42,3 +42,5 @@ Building for all OS:
 npm run build 
 npm run package-all
 ```
+
+https://github.com/samuelmeuli/action-electron-builder#readme

@@ -35,7 +35,7 @@ function setUpStreams(mainWindow) {
     function attachIO(stream, token, key) {
         console.log("START SETUP IO")
         stream.stdout.on('data', (data) => {
-            console.log("Key:" + key + " data:" + data + " TOKEN: " + token);
+            // console.log("Key:" + key + " data:" + data + " TOKEN: " + token);
             mainWindow.webContents.send(channels.STREAM_STD_OUT, { token: token, output: String(data).trim(), processKey: (key ? key : false) });
             // console.log(`stdout: ${String(data).trim()}`);
         });
