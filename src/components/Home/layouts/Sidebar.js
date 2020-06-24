@@ -13,7 +13,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { PlaylistPlayOutlined, SlowMotionVideoOutlined, LowPriorityOutlined, CloseOutlined } from '@material-ui/icons';
+import { PlaylistPlayOutlined, /* SlowMotionVideoOutlined, */ LowPriorityOutlined, CloseOutlined } from '@material-ui/icons';
 import { useStreams } from '../../../providers/streams-context';
 
 const drawerWidth = 240;
@@ -64,11 +64,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const homeTabs = [
-    {
+/*     {
         title: 'Stream (RTMP)',
         to: '/stream_rtmp',
         icon: SlowMotionVideoOutlined
-    },
+    }, */
     {
         title: 'Stream (HLS)',
         to: '/stream_hls',

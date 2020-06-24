@@ -17,7 +17,7 @@ const platformBinaries = {
     },
     hls: {
         linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
-        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe')
+        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe')
 
     },
     // In order to open multiple binaries, define an object with keys corresponding to names (arrays work too, provided ordering is maintained. However objects with semantic keys are recommended)
@@ -26,7 +26,7 @@ const platformBinaries = {
     // [NOTE: DO NOT USE '__MULTI__' as key]
     restream: {
         linux: { processOne: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'), processTwo: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript') },
-        win32: { processOne: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'), processTwo: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe') }
+        win32: { processOne: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe'), processTwo: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_downloader.exe') }
     }
 }
 
