@@ -1,0 +1,4 @@
+*.exe filter=lfs diff=lfs merge=lfs -text
+sampleScript filter=lfs diff=lfs merge=lfs -text
+stream_downloader filter=lfs diff=lfs merge=lfs -text
+stream_hls filter=lfs diff=lfs merge=lfs -text
