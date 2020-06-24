@@ -4,14 +4,14 @@ const theme = createMuiTheme({
     palette: {
         type: 'dark',
         primary: {
-            main: '#57b560',
+            main: '#1db954',
         },
         secondary: {
             main: '#9B2C2C',
         },
         background: {
-            paper: '#090909',
-            default: '#000000'
+            paper: '#1f1f1f',
+            default: '#171717'
         }
     },
 });
