@@ -22,7 +22,7 @@ npm start
 To start the app:
 
 ```
-npm run start-electron #starts electron
+npm run start-electron
 ```
 
 Please note that app runs in development mode.
@@ -39,7 +39,7 @@ npm run package
 
 Building for all OS:
 ```
-npm run build 
+npm run build
 npm run package-all
 ```
 
