@@ -13,7 +13,7 @@ let streams = {};
 const platformBinaries = {
     rtmp: {
         linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
-        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe')
+        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe')
     },
     hls: {
         linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
