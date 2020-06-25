@@ -28,7 +28,7 @@ export default function CreatedStream({ match, handleCloseStream }) {
 
     useEffect(() => {
         if (!Streams.allStreams[token]) return;
-        console.log(Streams.allStreams[token].output);
+        // console.log(Streams.allStreams[token].output);
         Streams.allStreams[token].output && setOutput(Streams.allStreams[token].output);
     }, [Streams.allStreams, token]);
 
