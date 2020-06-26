@@ -21,6 +21,7 @@ export default function Restream({ history, handleError }) {
     const [streamToken, setStreamToken] = useState("");
     const [streamURL, setStreamURL] = useState("");
     const [loading, setLoading] = useState(false);
+    const [keepFiles, setKeepFiles] = useState(false);
     const [errors, setErrors] = useState(false)
 
     const handleCreateStream = (e) => {
@@ -47,14 +48,6 @@ export default function Restream({ history, handleError }) {
         Streams.createRestream(streamToken, streamURL).then(()=>history.push('/stream/'+streamToken)).catch(handleError).finally(()=>setLoading(false));
 
     }
-    
-    const [state, setState] = React.useState({
-        keepFiles: false,
-    });
-    
-    const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
 
     return <>
         <Loader open={loading} />
@@ -75,7 +68,7 @@ export default function Restream({ history, handleError }) {
                                     <Typography>Advanced</Typography>
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
-                                    <FormControlLabel control={<Checkbox checked={state.keepFiles} onChange={handleChange} name="keepFiles" color="primary"/>} label="Keep video files on disk" />
+                                    <FormControlLabel control={<Checkbox checked={keepFiles} onChange={(event)=>setKeepFiles(event.target.checked)} name="keepFiles" color="primary"/>} label="Keep video files on disk" />
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>
                         </div>
