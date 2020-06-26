@@ -13,10 +13,10 @@ let streams = {};
 const platformBinaries = {
     rtmp: {
         linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
-        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe')
+        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe')
     },
     hls: {
-        linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
+        linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'stream_hls'),
         win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe')
 
     },
@@ -25,7 +25,7 @@ const platformBinaries = {
     // Not specifying correct keys will have unexpected results
     // [NOTE: DO NOT USE '__MULTI__' as key]
     restream: {
-        linux: { uploader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'), downloader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript') },
+        linux: { uploader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'stream_hls'), downloader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'stream_downloader') },
         win32: { uploader: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe'), downloader: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_downloader.exe') }
     }
 }
