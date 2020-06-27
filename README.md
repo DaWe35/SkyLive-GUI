@@ -31,16 +31,20 @@ For production usage, download the [latest release](https://github.com/DaWe35/Sk
 
 ## Build
 
-Building for your OS:
+### Building for your OS:
+
+On linux `chmod +x bin/stream_hls` & `chmod +x bin/stream_downloader`
+
 ```
 npm run build 
 npm run package
 ```
 
-Building for all OS:
+### Building for all OS:
+
 ```
 npm run build
 npm run package-all
 ```
 
-https://github.com/samuelmeuli/action-electron-builder#readme
+Ci info: https://github.com/samuelmeuli/action-electron-builder#readme
