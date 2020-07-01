@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Container } from '@material-ui/core';
 import Button from './../../../atoms/button.js';
-import { AirplayOutlined, LowPriorityOutlined } from '@material-ui/icons';
+import { AirplayOutlined, LowPriorityOutlined, OpenInBrowserOutlined } from '@material-ui/icons';
 import FlavouredInput from '../gadgets/FlavouredInput';
 import { useStreams } from '../../../providers/streams-context';
 import Loader from '../gadgets/Loader';
@@ -12,7 +12,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { channels } from '../../../shared/constants.js';
 
+const { shell, ipcRenderer } = window;
 
 export default function Restream({ history, handleError }) {
     // const classes = useStyles();
@@ -23,6 +25,23 @@ export default function Restream({ history, handleError }) {
     const [loading, setLoading] = useState(false);
     const [keepFiles, setKeepFiles] = useState(false);
     const [errors, setErrors] = useState(false)
+    const [userWorkingDirectory, setUserWorkingDirectory] = useState("");
+
+    
+
+    const showInDirectory = () => {
+        shell.openExternal('file://'+userWorkingDirectory) // ~/.SkyLive is the working directory path.
+    }
+
+    useEffect(()=> {
+        ipcRenderer.send(channels.USER_WORKING_DIRECTORY);
+        const listener = (event, dir) => {
+            setUserWorkingDirectory(dir);
+        }
+        ipcRenderer.on(channels.USER_WORKING_DIRECTORY, listener);
+
+        return ()=>ipcRenderer.removeListener(channels.USER_WORKING_DIRECTORY, listener);
+    }, []);
 
     const handleCreateStream = (e) => {
         e.preventDefault();
@@ -45,7 +64,7 @@ export default function Restream({ history, handleError }) {
 
         setErrors(false);
         setLoading(true);
-        Streams.createRestream(streamToken, streamURL).then(()=>history.push('/stream/'+streamToken)).catch(handleError).finally(()=>setLoading(false));
+        Streams.createRestream(streamToken, streamURL, keepFiles).then(()=>history.push('/stream/'+streamToken)).catch(handleError).finally(()=>setLoading(false));
 
     }
 
@@ -69,6 +88,7 @@ export default function Restream({ history, handleError }) {
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
                                     <FormControlLabel control={<Checkbox checked={keepFiles} onChange={(event)=>setKeepFiles(event.target.checked)} name="keepFiles" color="primary"/>} label="Keep video files on disk" />
+                                    <Button color='primary' onClick={ showInDirectory } startIcon={<OpenInBrowserOutlined />} variant="outlined">Open working directory</Button>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>
                         </div>

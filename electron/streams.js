@@ -72,12 +72,12 @@ function setUpStreams(mainWindow) {
         createStreams(platformBinaries.rtmp[process.platform], commands.getRtmpStreamArguments(token), token);
     });
 
-    ipcMain.on(channels.CREATE_HLS_STREAM, (event, { token, dir }) => {
-        createStreams(platformBinaries.hls[process.platform], commands.getHlsStreamArguments(token, dir), token);
+    ipcMain.on(channels.CREATE_HLS_STREAM, (event, { token, dir, keepFiles }) => {
+        createStreams(platformBinaries.hls[process.platform], commands.getHlsStreamArguments(token, dir, keepFiles), token);
     });
 
-    ipcMain.on(channels.CREATE_RESTREAM, (event, { token, url }) => {
-        createStreams(platformBinaries.restream[process.platform], commands.getRestreamArguments(token, url), token);
+    ipcMain.on(channels.CREATE_RESTREAM, (event, { token, url, keepFiles }) => {
+        createStreams(platformBinaries.restream[process.platform], commands.getRestreamArguments(token, url, keepFiles), token);
     });
 
     ipcMain.on(channels.APP_INFO, (event) => {

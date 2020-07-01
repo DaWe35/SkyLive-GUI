@@ -54,9 +54,9 @@ const StreamsProvider = props => {
             })
     }
 
-    const createHlsStream = (token, dir) => {
+    const createHlsStream = (token, dir, keepFiles) => {
         return createStreamBasic(token, "blahblah").then(res => {
-            ipcRenderer.send(channels.CREATE_HLS_STREAM, { token, dir });
+            ipcRenderer.send(channels.CREATE_HLS_STREAM, { token, dir, keepFiles });
             addStream(token, res.data);
             //console.log(allStreams);
             //console.log("this does run");
@@ -75,9 +75,9 @@ const StreamsProvider = props => {
 
     }
 
-    const createRestream = (token, url) => {
+    const createRestream = (token, url, keepFiles) => {
         return createStreamBasic(token, "blahblah").then(res => {
-            ipcRenderer.send(channels.CREATE_RESTREAM, { token, url });
+            ipcRenderer.send(channels.CREATE_RESTREAM, { token, url, keepFiles });
             addStream(token, res.data);
             //console.log(allStreams);
             //console.log("this does run");

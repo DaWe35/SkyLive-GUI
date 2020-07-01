@@ -50,7 +50,7 @@ export default function StreamHLS({ history, handleError }) {
 
         setErrors(false);
         setLoading(true);
-        Streams.createHlsStream(streamToken, recordingFolder).then(()=>history.push('/stream/'+streamToken)).catch(handleError).finally(() => setLoading(false));
+        Streams.createHlsStream(streamToken, recordingFolder, keepFiles).then(()=>history.push('/stream/'+streamToken)).catch(handleError).finally(() => setLoading(false));
     }
 
     const showDirectoryDialogBox = () => {
@@ -102,7 +102,7 @@ export default function StreamHLS({ history, handleError }) {
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
                                     <FormControlLabel control={<Checkbox checked={keepFiles} onChange={(event)=>setKeepFiles(event.target.checked)} name="keepFiles" color="primary"/>} label="Keep video files on disk" />
-                                    <Button color='primary' onClick={ showInDirectory } startIcon={<OpenInBrowserOutlined />} variant="outlined">Open SkyLive folder</Button>
+                                    <Button color='primary' onClick={ showInDirectory } startIcon={<OpenInBrowserOutlined />} variant="outlined">Open working directory</Button>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>
                         </div>

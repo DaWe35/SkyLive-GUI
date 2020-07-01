@@ -28,6 +28,7 @@ const getUpdateDescriptionText = (updateState) => {
 export default function InfoDialog({ open, handleClose }) {
     const [updateStatus, setUpdateStatus] = useState({});
     const [version, setVersion] = useState();
+    const [userWorkingDirectory, setUserWorkingDirectory] = useState("");
 
 
     useEffect(() => {
@@ -47,6 +48,20 @@ export default function InfoDialog({ open, handleClose }) {
         })
     }, [])
 
+    useEffect(()=> {
+        ipcRenderer.send(channels.USER_WORKING_DIRECTORY);
+        const listener = (event, dir) => {
+            setUserWorkingDirectory(dir);
+        }
+        ipcRenderer.on(channels.USER_WORKING_DIRECTORY, listener);
+
+        return ()=>ipcRenderer.removeListener(channels.USER_WORKING_DIRECTORY, listener);
+    }, []);
+
+    const showInDirectory = () => {
+        shell.openExternal('file://'+userWorkingDirectory) // ~/.SkyLive is the working directory path.
+    }
+
     return (
         <Dialog maxWidth="sm" fullWidth onClose={handleClose} open={open}>
             <DialogContent>
@@ -57,6 +72,9 @@ export default function InfoDialog({ open, handleClose }) {
                     <div style={{ flex: 2, margin: 20, marginBottom: 0, justifyContent: "center", alignItems: "center" }}>
                         <Typography gutterBottom>
                             SkyLive-GUI is a wrapper for the command line SkyLive. It provides non custodial streaming, so you can broadcast live videos without a centralized server.
+                            <Button onClick={ showInDirectory } style={{ padding: "5px", minWidth: 0 }}>
+                                Open working directory
+                            </Button>
                         </Typography>
                         <Typography style={{ fontStyle: "italic" }} gutterBottom>
                             Made by 
