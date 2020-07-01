@@ -15,7 +15,10 @@ module.exports = {
     CREATE_RESTREAM: 'create_restream',
     STREAM_STD_OUT: 'stream_std_out',
     STREAM_DATA: 'stream_data',
-    CLOSE_STREAM: 'close_stream'
+    CLOSE_STREAM: 'close_stream',
+    CLOSE_ALL_STREAMS: 'close_all_streams',
+    CLOSE_WINDOW: 'close_window',
+    CONFIRM_EXIT: 'confirm_exit'
   },
   updateStates: {
     STARTED: 'started',

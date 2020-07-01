@@ -58,7 +58,7 @@ function setUpStreams(mainWindow) {
             streams[token] = spawn(bins, args);
             attachIO(streams[token], token);
         } else {
-            streams[token] = {__MULTI__: true};
+            streams[token] = { __MULTI__: true };
             Object.keys(bins).forEach(key => {
                 if (!args[key]) throw new Error("Appropriate keys not found in commands.js");
 
@@ -66,6 +66,18 @@ function setUpStreams(mainWindow) {
                 attachIO(streams[token][key], token, key);
             })
         }
+    }
+
+    function killStream(token) {
+        if (streams[token].__MULTI__) {
+            Object.keys(streams[token]).forEach(key => {
+                if (key === '__MULTI__') return;
+                kill(streams[token][key].pid);
+            })
+        } else {
+            kill(streams[token].pid);
+        }
+        delete streams[token];
     }
 
     ipcMain.on(channels.CREATE_RTMP_STREAM, (event, { token }) => {
@@ -84,17 +96,13 @@ function setUpStreams(mainWindow) {
         event.sender.send(channels.APP_INFO, app.getVersion());
     });
 
-    ipcMain.on(channels.CLOSE_STREAM, (event, { token }) => {
-        if (streams[token].__MULTI__) {
-            Object.keys(streams[token]).forEach(key=>{
-                if (key === '__MULTI__') return;
-                kill(streams[token][key].pid);
-            })
-        } else {
-            kill(streams[token].pid);
-        }
-        delete streams[token];
-    });
+    ipcMain.on(channels.CLOSE_STREAM, (event, { token }) => killStream(token));
+
+    ipcMain.on(channels.CLOSE_ALL_STREAMS, (event) => {
+        Object.keys(streams).forEach(token => {
+            killStream(token);
+        })
+    })
 
     ipcMain.on(channels.STREAM_DATA, (event, { token }) => {
         axios.get('https://skylive.coolhd.hu/api/stream_data', { params: { token } })
@@ -102,6 +110,14 @@ function setUpStreams(mainWindow) {
                 event.sender.send(channels.STREAM_DATA, { err: false, res: { token, data: res.data } });
             })
             .catch(err => event.sender.send(channels.STREAM_DATA, { err: err }))
+    })
+
+
+    mainWindow.on('close', (e) => {
+        if (Object.keys(streams).length > 0) {
+            e.preventDefault();
+            mainWindow.webContents.send(channels.CONFIRM_EXIT);
+        }
     })
 }
 

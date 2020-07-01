@@ -54,6 +54,10 @@ ipcMain.on(channels.OPEN_BROWSER, ({ url }) => {
 
 ipcMain.on(channels.USER_WORKING_DIRECTORY, (event) => {
     fs.promises.access(HOME_DIRECTORY, fs.constants.F_OK)
-        .catch(()=>fs.promises.mkdir(HOME_DIRECTORY))
+        .catch(() => fs.promises.mkdir(HOME_DIRECTORY))
         .finally(event.sender.send(channels.USER_WORKING_DIRECTORY, HOME_DIRECTORY));
 });
+
+ipcMain.on(channels.CLOSE_WINDOW, (event)=>{
+    mainWindow.close();
+})

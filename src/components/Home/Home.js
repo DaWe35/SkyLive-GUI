@@ -19,6 +19,7 @@ import { Route, HashRouter as Router, Redirect, Switch } from 'react-router-dom'
 import { InfoOutlined } from '@material-ui/icons';
 // import { SettingsOutlined } from '@material-ui/icons';
 import { StreamsProvider } from '../../providers/streams-context';
+import ConfirmExitDialog from './layouts/ConfirmExitDialog';
 
 // import { channels } from '../../shared/constants.js';
 // const { ipcRenderer } = window;
@@ -48,6 +49,7 @@ export default function Home() {
 
     return <StreamsProvider>
         <CssBaseline />
+        <ConfirmExitDialog/>
         <CloseStreamDialog token={closeStreamDialogToken} handleDialogClosed={() => setCloseStreamDialogToken(null)} />
         <InfoDialog open={infoDialogOpen} handleClose={() => setInfoDialogOpen(false)} />
         <CreateStreamErrorDialog data={createStreamErrorDialog} handleDialogClosed={() => setCreateStreamErrorDialog(false)} />
