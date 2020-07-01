@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
 import Button from '../../../atoms/button.js';
-import { useStreams } from '../../../providers/streams-context';
 import { channels } from '../../../shared/constants.js'
 
 const { ipcRenderer } = window;
@@ -9,7 +8,6 @@ const { ipcRenderer } = window;
 export default function ConfirmExitDialog() {
     const [visible, setVisible] = useState(false);
 
-    const Streams = useStreams();
     const handleCancelled = () => {
         setVisible(false);
     }
