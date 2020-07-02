@@ -3,11 +3,13 @@ const axios = require('axios');
 const { spawn } = require('cross-spawn');
 const kill = require('tree-kill')
 const path = require('path');
+const log = require('electron-log');
 
 let isProd = process.env.ELECTRON_START_URL ? false : true;
 
 const { channels } = require('./../src/shared/constants.js');
 const commands = require('../commands.js');
+const fs = require("fs");
 let streams = {};
 
 const platformBinaries = {
@@ -53,15 +55,16 @@ function setUpStreams(mainWindow) {
 
     }
 
-    function createStreams(bins, args, token) {
+    async function createStreams(bins, args, token) {
         if (Object.keys(bins).length === 0 || typeof bins === 'string') {
+            if (process.platform === 'linux') await checkLinuxExecutePermissions(bins);
             streams[token] = spawn(bins, args);
             attachIO(streams[token], token);
         } else {
             streams[token] = { __MULTI__: true };
-            Object.keys(bins).forEach(key => {
+            Object.keys(bins).forEach(async (key) => {
                 if (!args[key]) throw new Error("Appropriate keys not found in commands.js");
-
+                if (process.platform === 'linux') await checkLinuxExecutePermissions(bins[key]);
                 streams[token][key] = spawn(bins[key], args[key]);
                 attachIO(streams[token][key], token, key);
             })
@@ -80,16 +83,16 @@ function setUpStreams(mainWindow) {
         delete streams[token];
     }
 
-    ipcMain.on(channels.CREATE_RTMP_STREAM, (event, { token }) => {
-        createStreams(platformBinaries.rtmp[process.platform], commands.getRtmpStreamArguments(token), token);
+    ipcMain.on(channels.CREATE_RTMP_STREAM, async (event, { token }) => {
+        await createStreams(platformBinaries.rtmp[process.platform], commands.getRtmpStreamArguments(token), token);
     });
 
-    ipcMain.on(channels.CREATE_HLS_STREAM, (event, { token, dir, keepFiles }) => {
-        createStreams(platformBinaries.hls[process.platform], commands.getHlsStreamArguments(token, dir, keepFiles), token);
+    ipcMain.on(channels.CREATE_HLS_STREAM, async (event, { token, dir, keepFiles }) => {
+        await createStreams(platformBinaries.hls[process.platform], commands.getHlsStreamArguments(token, dir, keepFiles), token);
     });
 
-    ipcMain.on(channels.CREATE_RESTREAM, (event, { token, url, keepFiles }) => {
-        createStreams(platformBinaries.restream[process.platform], commands.getRestreamArguments(token, url, keepFiles), token);
+    ipcMain.on(channels.CREATE_RESTREAM, async (event, { token, url, keepFiles }) => {
+        await createStreams(platformBinaries.restream[process.platform], commands.getRestreamArguments(token, url, keepFiles), token);
     });
 
     ipcMain.on(channels.APP_INFO, (event) => {
@@ -117,6 +120,15 @@ function setUpStreams(mainWindow) {
         if (Object.keys(streams).length > 0) {
             e.preventDefault();
             mainWindow.webContents.send(channels.CONFIRM_EXIT);
+        }
+    })
+}
+
+async function checkLinuxExecutePermissions(bin) {
+    return fs.promises.access(bin, fs.constants.X_OK).catch(err=>{
+        if(err.code === 'EACCES') {
+            log.info(bin + " has no execute perms, chmodding to 774.");
+            return fs.promises.chmod(bin, 0o774);
         }
     })
 }

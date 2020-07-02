@@ -32,9 +32,6 @@ For production usage, download the [latest release](https://github.com/DaWe35/Sk
 ## Build
 
 ### Building for your OS:
-
-On linux `chmod +x bin/stream_hls` & `chmod +x bin/stream_downloader`
-
 ```
 npm run build 
 npm run package
