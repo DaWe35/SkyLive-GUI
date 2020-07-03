@@ -13,15 +13,17 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
-      - name: Cache git lfs
-        uses: actions/cache@v1.1.0
         with:
-          path: .git/lfs
-          key: .git/lfs
+          lfs: true
+
+      # - name: Cache git lfs
+      #   uses: actions/cache@v1.1.0
+      #   with:
+      #     path: .git/lfs
+      #     key: .git/lfs
 
       - name: Pull lfs data, if not cached
-        run: git lfs pull
+        run: git lfs checkout
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
