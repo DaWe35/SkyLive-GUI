@@ -2,7 +2,7 @@
   "name": "skylive",
   "productName": "SkyLive",
   "main": "electron/main.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": "github:DaWe35/SkyLive-GUI",
   "dependencies": {
     "@material-ui/core": "^4.10.2",
