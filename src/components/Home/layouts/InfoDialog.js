@@ -16,6 +16,8 @@ const getUpdateDescriptionText = (updateState) => {
             return "Currently checking...";
         case updateStates.ERROR:
             return "Update failed. Check logs for details";
+        case updateStates.NOT_AVAILABLE:
+            return "On latest release"
         case updateStates.DOWNLOADED:
             return "Update successful. Pending app restart";
         case updateStates.DOWNLOADING:

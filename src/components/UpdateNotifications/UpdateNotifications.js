@@ -14,10 +14,13 @@ export default function UpdateNotifications() {
     React.useEffect(()=>ipcRenderer.on(channels.UPDATE_START, ()=>console.log("I RANNN")), []);
 
     return <>
-        <BasicNotifierOnIpcSignal signal={channels.UPDATE_START} message={"Starting the updater..."}/>
+        {
+        //  This notification feels unnecessary and obtrusive.
+        //<BasicNotifierOnIpcSignal signal={channels.UPDATE_START} message={"Starting the updater..."}/>
+        }
         <BasicNotifierOnIpcSignal signal={channels.UPDATE_CHECKING} message={"Checking for updates..."}/>
         <BasicNotifierOnIpcSignal signal={channels.UPDATE_ERROR} message={"Updater failed. Check logs for more info."}/>
-        <BasicNotifierOnIpcSignal signal={channels.UPDATE_NOT_AVAILABLE} message={"Already on later version."}/>
+        <BasicNotifierOnIpcSignal signal={channels.UPDATE_NOT_AVAILABLE} message={"Already on latest version."}/>
         <BasicNotifierOnIpcSignal signal={channels.UPDATE_DOWNLOADING} message={"Downloading update. Check info for details."}/>
         <UpdateDownloaded/>
     </>
@@ -29,7 +32,7 @@ function BasicNotifierOnIpcSignal({signal, message}) {
 
     ipcRenderer.on(signal, (event, err) => {
         // alert(JSON.stringify(err));
-        console.log("I RAN");
+        // console.log("I RAN");
         ipcRenderer.removeAllListeners(signal);
         setOpen(true);
     });
