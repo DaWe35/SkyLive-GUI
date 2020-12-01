@@ -20,6 +20,7 @@ import { InfoOutlined } from '@material-ui/icons';
 // import { SettingsOutlined } from '@material-ui/icons';
 import { StreamsProvider } from '../../providers/streams-context';
 import ConfirmExitDialog from './layouts/ConfirmExitDialog';
+import TubeUpload from './layouts/tubeupload';
 
 // import { channels } from '../../shared/constants.js';
 // const { ipcRenderer } = window;
@@ -67,6 +68,7 @@ export default function Home() {
                 <Switch>
                     {/* <Route path="/stream_rtmp" exact render={(props) => <StreamRTMP {...props} handleError={(err) => setCreateStreamErrorDialog(err)} />} /> */}
                     <Route path="/stream_hls" exact render={(props) => <StreamHLS {...props} handleError={(err) => setCreateStreamErrorDialog(err)} />} />
+                    <Route path="/tube_upload" exact render={(props) => <TubeUpload {...props} handleError={(err) => setCreateStreamErrorDialog(err)} />} />
                     <Route path="/restream" exact render={(props) => <Restream {...props} handleError={(err) => setCreateStreamErrorDialog(err)} />} />
                     <Route path="/stream/:token" exact render={(props) => <CreatedStream {...props} handleCloseStream={(token) => closeStreamAttempted(token)} />} />
                     <Route path="/" render={() => <Redirect to="/stream_hls" />} />
