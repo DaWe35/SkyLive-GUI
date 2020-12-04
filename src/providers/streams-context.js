@@ -86,6 +86,10 @@ const StreamsProvider = props => {
 
     }
 
+    const beginReUpload = (url) => {
+        ipcRenderer.send(channels.CREATE_RESTREAM, {url}); 
+    }
+
 
     const closeStream = (token) => {
         //console.log(token)

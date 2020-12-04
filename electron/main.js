@@ -6,6 +6,7 @@ const url = require('url');
 const { channels } = require('../src/shared/constants.js');
 const { setUpStreams } = require('./streams.js');
 const { setUpUpdates } = require('./updates.js');
+const { setUpReUpload } = require('./reUpload');
 const fs = require('fs');
 
 const HOME_DIRECTORY = path.join(app.getPath('home'), '.SkyLive');
@@ -31,6 +32,7 @@ function createWindow() {
     });
     setUpStreams(mainWindow);
     setUpUpdates(mainWindow);
+    setUpReUpload(mainWindow)
 }
 
 // app.setAppLogsPath();

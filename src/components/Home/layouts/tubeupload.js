@@ -7,6 +7,7 @@ import FlavouredInput from '../gadgets/FlavouredInput.js'
 import Loader from '../gadgets/Loader.js';
 import Button from './../../../atoms/button.js';
 import { CloudUpload, AirplayOutlined } from '@material-ui/icons';
+import { useStreams } from '../../../providers/streams-context';
 
 
 // Defines window
@@ -21,8 +22,24 @@ export default function TubeUpload({ history, handleError }) {
     // Define some functions
     // This one does the magic and calls python
     const reuploadVideo = (e) => {
+        const Streams = useStreams();
         e.preventDefault();
-        console.log(videoUrl)
+        let currentErrors = {};
+        let hasErrors = false;
+        // console.log(videoUrl)
+        if (!videoUrl) {
+            currentErrors.url = "Cannot be empty";
+            hasErrors = true;
+        }
+
+        if (hasErrors) {
+            setErrors(currentErrors);
+            return;
+        }
+
+        setErrors(false);
+        setLoading(true);
+        Streams.beginReUpload(videoUrl).then(()=>console.log("downloading...")).catch(handleError).finally(()=>setLoading(false));
     }
     return <>
         <Loader open={loading}/>

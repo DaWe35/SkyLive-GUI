@@ -29,6 +29,10 @@ const platformBinaries = {
     restream: {
         linux: { uploader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'stream_hls'), downloader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'stream_downloader') },
         win32: { uploader: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe'), downloader: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_downloader.exe') }
+    },
+    reUpload: {
+        linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'download_upload'),
+        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'download_upload.exe')
     }
 }
 

@@ -6,11 +6,15 @@ function getRtmpStreamArguments(token) {
     return ["--token",token];
 }
 
+function getReUploadArguments(url) {
+    return ["--url", url]
+}
+
 // In order to specify arguments to multiple processes, specify an object, with keys labelled the same as keys on "platformBinaries"
 function getRestreamArguments(token, url, keepFiles) {
     return {uploader: ["--token",token, "--record_folder",token, "--keep_files",keepFiles], downloader: ["--url",url, "--record_folder",token]};
 }
 
 module.exports = {
-    getHlsStreamArguments, getRtmpStreamArguments, getRestreamArguments
+    getHlsStreamArguments, getRtmpStreamArguments, getRestreamArguments, getReUploadArguments
 }

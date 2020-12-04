@@ -13,6 +13,7 @@ module.exports = {
     CREATE_RTMP_STREAM: 'create_rtmp_stream',
     CREATE_HLS_STREAM: 'create_hls_stream',
     CREATE_RESTREAM: 'create_restream',
+    CREATE_REUPLOAD: 'create_reupload',
     STREAM_STD_OUT: 'stream_std_out',
     STREAM_DATA: 'stream_data',
     CLOSE_STREAM: 'close_stream',
