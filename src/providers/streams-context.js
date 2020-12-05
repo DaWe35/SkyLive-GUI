@@ -133,7 +133,7 @@ const StreamsProvider = props => {
 
 
 
-    return <StreamsContext.Provider value={{ allStreams, createHlsStream, createRtmpStream, createRestream, closeStream }} {...props} />
+    return <StreamsContext.Provider value={{ allStreams, createHlsStream, createRtmpStream, createRestream, closeStream, beginReUpload }} {...props} />
 }
 
 

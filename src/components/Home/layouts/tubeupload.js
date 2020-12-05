@@ -1,5 +1,5 @@
 //
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Typography, Container} from '@material-ui/core';
 
 //Grabs third party stuff
@@ -9,20 +9,15 @@ import Button from './../../../atoms/button.js';
 import { CloudUpload, AirplayOutlined } from '@material-ui/icons';
 import { useStreams } from '../../../providers/streams-context';
 
-
-// Defines window
-const { dialog, currentWindow, shell, ipcRenderer } = window;
-
-
-export default function TubeUpload({ history, handleError }) {
-    const [videoUrl, setVideoUrl] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState(false)
+export default function TubeUpload() {
+    // const [videoUrl, setVideoUrl] = useState("");
+    // const [loading, setLoading] = useState(false);
+    // const [errors, setErrors] = useState(false)
     
-    // Define some functions
-    // This one does the magic and calls python
+    // // Define some functions
+    // // This one does the magic and calls python
     const reuploadVideo = (e) => {
-        const Streams = useStreams();
+        const useStreams = useStreams();
         e.preventDefault();
         let currentErrors = {};
         let hasErrors = false;
@@ -39,7 +34,8 @@ export default function TubeUpload({ history, handleError }) {
 
         setErrors(false);
         setLoading(true);
-        Streams.beginReUpload(videoUrl).then(()=>console.log("downloading...")).catch(handleError).finally(()=>setLoading(false));
+    //     Streams.beginReUpload(videoUrl).then(()=>console.log("downloading...")).catch(handleError).finally(()=>setLoading(false));
+        console.log(videoUrl)
     }
     return <>
         <Loader open={loading}/>
