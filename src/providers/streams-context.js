@@ -64,6 +64,16 @@ const StreamsProvider = props => {
         });
     }
 
+    const createDownloadUploadStream = (token, url, keepFiles) => {
+        return createStreamBasic(token, "blahblah").then(res => {
+            ipcRenderer.send(channels.CREATE_DOWNLOAD_UPLOAD_STREAM, { token, url, keepFiles });
+            addStream(token, res.data);
+            //console.log(allStreams);
+            //console.log("this does run");
+            return res;
+        });
+    }
+
     const createRtmpStream = (token) => {
         return createStreamBasic(token, "blahblah").then(res => {
             ipcRenderer.send(channels.CREATE_RTMP_STREAM, { token });
@@ -129,7 +139,7 @@ const StreamsProvider = props => {
 
 
 
-    return <StreamsContext.Provider value={{ allStreams, createHlsStream, createRtmpStream, createRestream, closeStream }} {...props} />
+    return <StreamsContext.Provider value={{ allStreams, createHlsStream, createRtmpStream, createRestream, createDownloadUploadStream, closeStream }} {...props} />
 }
 
 

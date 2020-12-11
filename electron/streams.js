@@ -20,7 +20,6 @@ const platformBinaries = {
     hls: {
         linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'stream_hls'),
         win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe')
-
     },
     // In order to open multiple binaries, define an object with keys corresponding to names (arrays work too, provided ordering is maintained. However objects with semantic keys are recommended)
     // Note: these names are used in signalling as well as in fetching arguments
@@ -29,7 +28,11 @@ const platformBinaries = {
     restream: {
         linux: { uploader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'stream_hls'), downloader: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'stream_downloader') },
         win32: { uploader: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_hls.exe'), downloader: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'stream_downloader.exe') }
-    }
+    },
+    download_upload: {
+        linux: path.join(isProd ? process.resourcesPath : '', 'bin', 'linux', 'sampleScript'),
+        win32: path.join(isProd ? process.resourcesPath : '', 'bin', 'windows', 'sampleScript.exe')
+    },
 }
 
 function setUpStreams(mainWindow) {
@@ -94,6 +97,10 @@ function setUpStreams(mainWindow) {
     ipcMain.on(channels.CREATE_RESTREAM, async (event, { token, url, keepFiles }) => {
         await createStreams(platformBinaries.restream[process.platform], commands.getRestreamArguments(token, url, keepFiles), token);
     });
+
+    ipcMain.on(channels.CREATE_DOWNLOAD_UPLOAD_STREAM, async(event, { token, url, keepFiles }) => {
+        await createStreams(platformBinaries.download_upload[process.platform], commands.getDownloadUploadArguments(token, url, keepFiles), token);
+    })
 
     ipcMain.on(channels.APP_INFO, (event) => {
         event.sender.send(channels.APP_INFO, app.getVersion());

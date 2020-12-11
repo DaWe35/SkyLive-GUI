@@ -4,6 +4,7 @@ import Sidebar from './layouts/Sidebar';
 // import StreamRTMP from './layouts/StreamRTMP';
 import StreamHLS from './layouts/StreamHLS';
 import Restream from './layouts/Restream';
+import DownloadUpload from './layouts/DownloadUpload';
 import CreatedStream from './layouts/CreatedStream';
 
 import CloseStreamDialog from './layouts/CloseStreamDialog';
@@ -68,6 +69,7 @@ export default function Home() {
                     {/* <Route path="/stream_rtmp" exact render={(props) => <StreamRTMP {...props} handleError={(err) => setCreateStreamErrorDialog(err)} />} /> */}
                     <Route path="/stream_hls" exact render={(props) => <StreamHLS {...props} handleError={(err) => setCreateStreamErrorDialog(err)} />} />
                     <Route path="/restream" exact render={(props) => <Restream {...props} handleError={(err) => setCreateStreamErrorDialog(err)} />} />
+                    <Route path="/download_upload" exact render={(props) => <DownloadUpload {...props} handleError={(err) => setCreateStreamErrorDialog(err)} />} />
                     <Route path="/stream/:token" exact render={(props) => <CreatedStream {...props} handleCloseStream={(token) => closeStreamAttempted(token)} />} />
                     <Route path="/" render={() => <Redirect to="/stream_hls" />} />
                 </Switch>

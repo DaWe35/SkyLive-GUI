@@ -13,7 +13,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { PlaylistPlayOutlined, /* SlowMotionVideoOutlined, */ LowPriorityOutlined, CloseOutlined } from '@material-ui/icons';
+import { PlaylistPlayOutlined, /* SlowMotionVideoOutlined, */ LowPriorityOutlined, CloseOutlined, SyncOutlined } from '@material-ui/icons';
 import { useStreams } from '../../../providers/streams-context';
 
 const drawerWidth = 240;
@@ -78,6 +78,11 @@ const homeTabs = [
         title: 'Restream',
         to: '/restream',
         icon: LowPriorityOutlined
+    },
+    {
+        title: 'Download/Upload',
+        to: '/download_upload',
+        icon: SyncOutlined
     }
 ]
 

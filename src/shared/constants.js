@@ -12,6 +12,7 @@ module.exports = {
     RESTART_APP: 'restart_app',
     CREATE_RTMP_STREAM: 'create_rtmp_stream',
     CREATE_HLS_STREAM: 'create_hls_stream',
+    CREATE_DOWNLOAD_UPLOAD_STREAM: 'create_download_upload_stream',
     CREATE_RESTREAM: 'create_restream',
     STREAM_STD_OUT: 'stream_std_out',
     STREAM_DATA: 'stream_data',
